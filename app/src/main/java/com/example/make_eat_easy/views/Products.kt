@@ -92,8 +92,9 @@ class Products : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                val draggedPosition = viewHolder.adapterPosition
                 val targetPosition = target.adapterPosition
+                if (targetPosition == 0) return false
+                val draggedPosition = viewHolder.adapterPosition
 
                 val list = viewModel.productsCategoryList.value!!
 
