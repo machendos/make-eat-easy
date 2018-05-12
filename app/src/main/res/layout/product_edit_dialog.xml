@@ -19,35 +19,13 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Название продукта"
             android:id="@+id/product_name"
-            android:text="@{product.productName}"
-            android:completionThreshold="1" />
-
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/measure_name"
-            android:hint="Measure"
-            android:text="asd"
-            android:completionThreshold="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{product.productName + 'a'}"/>
-
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Category"
-            android:id="@+id/category_name"
-            android:completionThreshold="1" />
+            android:text="@{product.productName}"/>
 
         <Button
             android:id="@+id/product_delete_button"
@@ -55,7 +33,6 @@
             android:layout_height="wrap_content"
             android:text="Delete product"
             />
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
