@@ -1,6 +1,7 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -16,6 +17,7 @@ import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.ProductsAdapter
 import com.example.make_eat_easy.databinding.AddCategoryDialogBinding
 import com.example.make_eat_easy.databinding.AddProductDialogBinding
+import com.example.make_eat_easy.databinding.ProductEditDialogBinding
 import com.example.make_eat_easy.databinding.ProductsBinding
 import com.example.make_eat_easy.viewmodels.ProductViewModel
 
@@ -29,12 +31,46 @@ class Products : AppCompatActivity() {
 
         val productAdapter = ProductsAdapter(viewModel)
         productAdapter.productClickListener = {
+
+
+            val bindingDialog: ProductEditDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.product_edit_dialog, null, false)
+
+            val asdasd = viewModel.productsCategoryList.value!![it]
+            bindingDialog.product = viewModel.productsCategoryList.value!![it]
+//            bindingDialog.productName.setText(currr.productName)
+
+
+
+            val dialog = AlertDialog.Builder(this)
+                .setView(bindingDialog.root)
+                .setPositiveButton("Ok") { _, _ ->
+                    val newProductName = bindingDialog.productName.text.toString()
+                    val newCategoryName = bindingDialog.categoryName.text.toString()
+                    val newMeasureName = bindingDialog.measureName.text.toString()
+
+                    if (newProductName !== asdasd.productName) {
+
+                    }
+
+                    Log.d("asdasd(after)", asdasd.toString())
+                }
+                .show()
+
+
+            bindingDialog.productDeleteButton.setOnClickListener {
+                viewModel.deleteProduct(asdasd.productId)
+                dialog.dismiss()
+
+            }
+
             Toast.makeText(
                 this,
                 viewModel.productsCategoryList.value!![it].productName,
                 Toast.LENGTH_LONG
             ).show()
         }
+
+
 
         viewModel.productRepository.measures.observe(this) {
             productAdapter.notifyDataSetChanged()
