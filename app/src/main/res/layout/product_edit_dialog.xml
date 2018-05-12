@@ -1,39 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.make_eat_easy.viewmodels.ProductViewModel"
+            />
+        <variable
+            name="product"
+            type="com.example.make_eat_easy.models.CategoryProduct"
+            />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Название продукта"
-        android:id="@+id/product_name"
-        android:completionThreshold="1" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название продукта"
+            android:id="@+id/product_name"
+            android:text="@{product.productName}"
+            android:completionThreshold="1" />
 
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/measure_name"
-        android:hint="Measure"
-        android:completionThreshold="1" />
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/measure_name"
+            android:hint="Measure"
+            android:text="asd"
+            android:completionThreshold="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{product.productName + 'a'}"/>
 
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Category"
-        android:id="@+id/category_name"
-        android:completionThreshold="1" />
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:id="@+id/category_name"
+            android:completionThreshold="1" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete product"
-        />
+        <Button
+            android:id="@+id/product_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete product"
+            />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
