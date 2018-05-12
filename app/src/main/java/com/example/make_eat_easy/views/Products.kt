@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.ProductsAdapter
 import com.example.make_eat_easy.databinding.AddCategoryDialogBinding
+import com.example.make_eat_easy.databinding.AddProductDialogBinding
 import com.example.make_eat_easy.databinding.ProductsBinding
 import com.example.make_eat_easy.viewmodels.ProductViewModel
-import kotlinx.android.synthetic.main.add_product_dialog.view.*
 
 class Products : AppCompatActivity() {
 
@@ -39,16 +39,19 @@ class Products : AppCompatActivity() {
 
         binding.goToAddProduct.setOnClickListener {
 
-            val dialogView = this.layoutInflater.inflate(R.layout.add_product_dialog, null)
+            val bindingDialog: AddProductDialogBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(this),
+                R.layout.add_product_dialog, null, false
+            )
 
-            dialogView.category_name.setAdapter(ArrayAdapter<String>(
+            bindingDialog.categoryName.setAdapter(ArrayAdapter<String>(
                 this,
                 R.layout.element_autocomplete,
                 R.id.autocomplete_element,
                 viewModel.productRepository.categories.value!!.map { it.categoryName }
             ))
 
-            dialogView.measure_name.setAdapter(ArrayAdapter<String>(
+            bindingDialog.measureName.setAdapter(ArrayAdapter<String>(
                 this,
                 R.layout.element_autocomplete,
                 R.id.autocomplete_element,
@@ -56,18 +59,18 @@ class Products : AppCompatActivity() {
             ))
 
             AlertDialog.Builder(this)
-                .setView(dialogView)
+                .setView(bindingDialog.root)
                 .setTitle("Add new product")
                 .setPositiveButton("Add") { _, _ ->
 
                     viewModel.addProduct(
-                        dialogView.product_name.text.toString(),
-                        dialogView.measure_name.text.toString(),
-                        dialogView.category_name.text.toString()
+                        bindingDialog.productName.text.toString(),
+                        bindingDialog.measureName.text.toString(),
+                        bindingDialog.categoryName.text.toString()
                     )
 
 
-                    Toast.makeText(this, dialogView.product_name.text.toString(), Toast.LENGTH_LONG)
+                    Toast.makeText(this, bindingDialog.productName.text.toString(), Toast.LENGTH_LONG)
                         .show()
                 }.setNegativeButton("Cancel") { _, _ -> }
                 .show()
