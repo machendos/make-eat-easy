@@ -32,7 +32,12 @@ class Products : AppCompatActivity() {
         productAdapter.productClickListener = {
 
 
-            val bindingDialog: ProductEditDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.product_edit_dialog, null, false)
+            val bindingDialog: ProductEditDialogBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(this),
+                R.layout.product_edit_dialog,
+                null,
+                false
+            )
 
             val oldProduct = viewModel.productsCategoryList.value!![it]
             bindingDialog.product = viewModel.productsCategoryList.value!![it]
@@ -103,7 +108,11 @@ class Products : AppCompatActivity() {
                     )
 
 
-                    Toast.makeText(this, bindingDialog.productName.text.toString(), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this,
+                        bindingDialog.productName.text.toString(),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }.setNegativeButton("Cancel") { _, _ -> }
                 .show()
@@ -121,7 +130,7 @@ class Products : AppCompatActivity() {
                 .setTitle("Add new category")
                 .setPositiveButton("Add") { _, _ ->
 
-                        viewModel.addCategory(bindingDialog.addCategoryName.text.toString())
+                    viewModel.addCategory(bindingDialog.addCategoryName.text.toString())
 
                 }.setNegativeButton("Cancel") { _, _ -> }
                 .show()

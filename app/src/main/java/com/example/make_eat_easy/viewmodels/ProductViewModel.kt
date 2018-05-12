@@ -26,8 +26,8 @@ class ProductViewModel : ViewModel() {
                 productRepository
                     .categories
                     .value!!
-                    .map {
-                            category -> CategoryProduct(category)
+                    .map { category ->
+                        CategoryProduct(category)
                     } as MutableList
 
             val convertedProduct = productRepository
@@ -110,14 +110,14 @@ class ProductViewModel : ViewModel() {
 
     fun addCategory(categoryName: String) = productRepository.addCategory((categoryName))
 
-    fun deleteCategory(categoryId: Int) { }
+    fun deleteCategory(categoryId: Int) {}
 
     fun deleteCategoryWithProducts(categoryId: Int) {
 
     }
 
-    fun updateCategory(categoryId: Int, newCategoryName: String) { }
+    fun updateCategory(categoryId: Int, newCategoryName: String) {}
 
-    fun addMeasure(measureName: String) { }
+    fun addMeasure(measureName: String) {}
 
 }
