@@ -1,7 +1,6 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -35,30 +34,21 @@ class Products : AppCompatActivity() {
 
             val bindingDialog: ProductEditDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.product_edit_dialog, null, false)
 
-            val asdasd = viewModel.productsCategoryList.value!![it]
+            val oldProduct = viewModel.productsCategoryList.value!![it]
             bindingDialog.product = viewModel.productsCategoryList.value!![it]
-//            bindingDialog.productName.setText(currr.productName)
-
-
 
             val dialog = AlertDialog.Builder(this)
                 .setView(bindingDialog.root)
                 .setPositiveButton("Ok") { _, _ ->
                     val newProductName = bindingDialog.productName.text.toString()
-                    val newCategoryName = bindingDialog.categoryName.text.toString()
-                    val newMeasureName = bindingDialog.measureName.text.toString()
-
-                    if (newProductName !== asdasd.productName) {
-
-                    }
-
-                    Log.d("asdasd(after)", asdasd.toString())
+                    viewModel.updateProduct(oldProduct.productId, newProductName)
                 }
+                .setNegativeButton("Cancel") { _, _ -> }
                 .show()
 
 
             bindingDialog.productDeleteButton.setOnClickListener {
-                viewModel.deleteProduct(asdasd.productId)
+                viewModel.deleteProduct(oldProduct.productId)
                 dialog.dismiss()
 
             }

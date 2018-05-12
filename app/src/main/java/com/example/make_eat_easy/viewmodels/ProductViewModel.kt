@@ -3,13 +3,19 @@ package com.example.make_eat_easy.viewmodels
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.firebase.ProductsRepository
+import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.CategoryProduct
+import com.example.make_eat_easy.models.Product
 
 class ProductViewModel : ViewModel() {
 
     val productRepository = ProductsRepository()
 
     val productsCategoryList = MediatorLiveData<MutableList<CategoryProduct>>()
+
+    lateinit var cashedProduct: Product
+    lateinit var cashedcategories: Category
+    lateinit var cashedProductsList: List<Product>
 
     init {
 
@@ -90,7 +96,15 @@ class ProductViewModel : ViewModel() {
 
     fun deleteProduct(productId: Int) = productRepository.deleteProduct(productId)
 
-    fun updateProduct(productId: Int, measureName: String, categoryName: String) {
+    fun updateProduct(productId: Int, newProductName: String) {
+
+        val oldProduct = productRepository.products.value!!.find { it.productId == productId }
+
+        if (oldProduct!!.productName != newProductName) {
+            cashedProduct = oldProduct
+            productRepository.updateProduct(productId, newProductName)
+
+        }
 
     }
 
