@@ -20,6 +20,8 @@ class ProductsAdapter(
         val PRODUCT = 2
     }
 
+    lateinit var productClickListener: (position: Int) -> Unit
+
     class CategoryHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
 //        init {
 //            categoryView.setFocusable(false);
@@ -28,9 +30,12 @@ class ProductsAdapter(
         val categoryName = categoryView.findViewById<TextView>(R.id.category_text)
     }
 
-    class ProductHolder(productView: View) : RecyclerView.ViewHolder(productView) {
+    class ProductHolder(productView: View, productClickListener: (position: Int)  -> Unit) : RecyclerView.ViewHolder(productView) {
         val productNameView = productView.findViewById<TextView>(R.id.product_name)
         val measureNameView = productView.findViewById<TextView>(R.id.measure_name)
+        init {
+            productView.setOnClickListener { productClickListener(adapterPosition) }
+        }
     }
 
 
@@ -61,7 +66,7 @@ class ProductsAdapter(
         return if (viewType == PRODUCT) {
             val productView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.product_item, parent, false)
-            ProductsAdapter.ProductHolder(productView)
+            ProductsAdapter.ProductHolder(productView, productClickListener)
         } else {
             val categoryView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.category_item, parent, false)
@@ -83,6 +88,10 @@ class ProductsAdapter(
             .document(productId.toString())
             .delete()
 
+    }
+
+    fun SetProductClickListener(listener: (position: Int) -> Unit ) {
+        productClickListener = listener
     }
 
 
