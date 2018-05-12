@@ -28,6 +28,13 @@ class Products : AppCompatActivity() {
         val viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
 
         val productAdapter = ProductsAdapter(viewModel)
+        productAdapter.productClickListener = {
+            Toast.makeText(
+                this,
+                viewModel.productsCategoryList.value!![it].productName,
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
         viewModel.productRepository.measures.observe(this) {
             productAdapter.notifyDataSetChanged()
