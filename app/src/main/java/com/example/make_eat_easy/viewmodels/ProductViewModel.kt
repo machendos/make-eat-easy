@@ -88,4 +88,22 @@ class ProductViewModel : ViewModel() {
 
     }
 
+    fun deleteProduct(productId: Int) = productRepository.deleteProduct(productId)
+
+    fun updateProduct(productId: Int, measureName: String, categoryName: String) {
+
+    }
+
+    fun addCategory(categoryName: String) = productRepository.addCategory((categoryName))
+
+    fun deleteCategory(categoryId: Int) { }
+
+    fun deleteCategoryWithProducts(categoryId: Int) {
+
+    }
+
+    fun updateCategory(categoryId: Int, newCategoryName: String) { }
+
+    fun addMeasure(measureName: String) { }
+
 }
