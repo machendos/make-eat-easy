@@ -36,7 +36,7 @@ class Products : AppCompatActivity() {
             productsAdapter.notifyDataSetChanged()
         }
 
-        val editProductDialog = EditProductDialog(this, viewModel)
+        val editProductDialog = EditProductDialog(this, viewModel, binding.productsList)
         val addProductDialog = AddProductDialog(this, viewModel)
         val addCategoryDialog = AddCategoryDialog(this, viewModel)
 
@@ -49,7 +49,7 @@ class Products : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = productsAdapter
 
-        ItemTouchHelper(ProductTouchHelper(viewModel, productsAdapter)).attachToRecyclerView(
+        ItemTouchHelper(ProductTouchHelper(viewModel, productsAdapter, binding.productsList)).attachToRecyclerView(
             recyclerView
         )
 
