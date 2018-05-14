@@ -20,7 +20,7 @@ class ProductsAdapter(
         val PRODUCT = 2
     }
 
-    lateinit var productClickListener: (position: Int) -> Unit
+    private lateinit var productClickListener: (position: Int) -> Unit
 
     class CategoryHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
 //        init {
@@ -90,7 +90,7 @@ class ProductsAdapter(
 
     }
 
-    fun SetProductClickListener(listener: (position: Int) -> Unit ) {
+    fun setProductClickListener(listener: (position: Int) -> Unit ) {
         productClickListener = listener
     }
 

@@ -1,12 +1,15 @@
 package com.example.make_eat_easy.util
 
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.ProductsAdapter
 import com.example.make_eat_easy.viewmodels.ProductViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class ProductTouchHelper(
-    val viewModel: ProductViewModel, private val productAdapter: ProductsAdapter
+    val viewModel: ProductViewModel, private val productAdapter: ProductsAdapter, val view: View
 ) : ItemTouchHelper.SimpleCallback(0, 0) {
 
     override fun getMovementFlags(
@@ -46,7 +49,9 @@ class ProductTouchHelper(
         return false
     }
 
-    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+    override fun onSelectedChanged(
+        viewHolder: RecyclerView.ViewHolder?, actionState: Int
+    ) {
         if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
             var currCategoryId: Int? = null
             viewModel.productsCategoryList.value!!.forEach {
@@ -54,7 +59,9 @@ class ProductTouchHelper(
                 else currCategoryId = it.categoryId
             }
 
-            viewModel.productRepository.updateProductOrders(viewModel.productsCategoryList.value!!)
+            viewModel
+                .productRepository
+                .updateProductOrders(viewModel.productsCategoryList.value!!)
         }
         super.onSelectedChanged(viewHolder, actionState)
     }
@@ -67,7 +74,14 @@ class ProductTouchHelper(
             .value!![viewHolder.adapterPosition]
             .productId
 
-        viewModel.productRepository.deleteProduct(id)
+        viewModel.deleteProduct(id)
+
+        val productDeletedSnackbar = Snackbar.make(view, "Product removed", Snackbar.LENGTH_LONG)
+        productDeletedSnackbar.setAction("UNDO") {
+            viewModel.unremoveProduct()
+            Toast.makeText(view.context, "Undo", Toast.LENGTH_SHORT).show()
+        }
+        productDeletedSnackbar.show()
 
     }
 }
