@@ -94,7 +94,12 @@ class ProductViewModel : ViewModel() {
 
     }
 
-    fun deleteProduct(productId: Int) = productRepository.deleteProduct(productId)
+    fun deleteProduct(productId: Int) {
+        cashedProduct = productRepository.products.value!!.find { it.productId == productId }!!
+        productRepository.deleteProduct(productId)
+    }
+
+    fun unremoveProduct() = productRepository.unremoveProduct(cashedProduct)
 
     fun updateProduct(productId: Int, newProductName: String) {
 

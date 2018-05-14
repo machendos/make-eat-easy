@@ -249,6 +249,10 @@ class ProductsRepository {
         productCollection.document(productId.toString()).update("productName", productName)
     }
 
+    fun unremoveProduct(product: Product) {
+        productCollection.add(product)
+    }
+
 //    fun getOrderForNewProduct(categoryId: Int): Int {
 //
 //    }
