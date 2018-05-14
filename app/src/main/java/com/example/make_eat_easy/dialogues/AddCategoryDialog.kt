@@ -12,20 +12,23 @@ class AddCategoryDialog(
     private val context: Context, val viewModel: ProductViewModel
 ) {
 
-    private val bindingDialog: AddCategoryDialogBinding = DataBindingUtil.inflate(
-        LayoutInflater.from(context),
-        R.layout.add_category_dialog, null, false
-    )
+    fun show() {
+        val bindingDialog: AddCategoryDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.add_category_dialog, null, false
+        )
 
-    private val dialog = AlertDialog.Builder(context)
-        .setView(bindingDialog.root)
-        .setTitle("Add new category")
-        .setPositiveButton("Add") { _, _ ->
+        val dialog = AlertDialog.Builder(context)
+            .setView(bindingDialog.root)
+            .setTitle("Add new category")
+            .setPositiveButton("Add") { _, _ ->
 
-            viewModel.addCategory(bindingDialog.addCategoryName.text.toString())
+                viewModel.addCategory(bindingDialog.addCategoryName.text.toString())
 
-        }.setNegativeButton("Cancel") { _, _ -> }
+            }.setNegativeButton("Cancel") { _, _ -> }
 
-    fun show() = dialog.show()
+        dialog.show()
+
+    }
 
 }
