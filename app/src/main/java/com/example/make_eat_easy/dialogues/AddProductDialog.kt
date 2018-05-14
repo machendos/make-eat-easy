@@ -11,25 +11,27 @@ import com.example.make_eat_easy.viewmodels.ProductViewModel
 
 class AddProductDialog(private val context: Context, val viewModel: ProductViewModel) {
 
-    private val bindingDialog: AddProductDialogBinding = DataBindingUtil.inflate(
-        LayoutInflater.from(context),
-        R.layout.add_product_dialog, null, false
-    )
+    fun show() {
 
-    private val dialog = AlertDialog.Builder(context)
-        .setView(bindingDialog.root)
-        .setTitle("Add new product")
-        .setPositiveButton("Add") { _, _ ->
+        val bindingDialog: AddProductDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.add_product_dialog, null, false
+        )
 
-            viewModel.addProduct(
-                bindingDialog.productName.text.toString(),
-                bindingDialog.measureName.text.toString(),
-                bindingDialog.categoryName.text.toString()
-            )
+        val dialog = AlertDialog.Builder(context)
+            .setView(bindingDialog.root)
+            .setTitle("Add new product")
+            .setPositiveButton("Add") { _, _ ->
 
-        }.setNegativeButton("Cancel") { _, _ -> }
+                viewModel.addProduct(
+                    bindingDialog.productName.text.toString(),
+                    bindingDialog.measureName.text.toString(),
+                    bindingDialog.categoryName.text.toString()
+                )
 
-    init {
+            }.setNegativeButton("Cancel") { _, _ -> }
+        dialog.show()
+
         bindingDialog.categoryName.setAdapter(ArrayAdapter<String>(
             context,
             R.layout.element_autocomplete,
@@ -43,8 +45,5 @@ class AddProductDialog(private val context: Context, val viewModel: ProductViewM
             R.id.autocomplete_element,
             viewModel.productRepository.measures.value!!.map { it.measureName }
         ))
-
     }
-
-    fun show() = dialog.show()
 }
