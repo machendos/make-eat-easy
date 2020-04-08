@@ -2,17 +2,54 @@ package com.example.make_eat_easy
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import com.alamkanak.weekview.WeekView
+import com.alamkanak.weekview.WeekViewDisplayable
+import com.alamkanak.weekview.WeekViewEvent
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
+import java.util.*
+
+data class Event(
+    val id: Long,
+    val title: String,
+    val startTime: Calendar,
+    val endTime: Calendar,
+    val location: String,
+    val color: Int,
+    val isAllDay: Boolean,
+    val isCanceled: Boolean
+) : WeekViewDisplayable<Event> {
+
+    override fun toWeekViewEvent(): WeekViewEvent<Event> {
+        // Build the styling of the event, for instance background color and strike-through
+        val style = WeekViewEvent.Style.Builder()
+            .setBackgroundColor(color)
+            .setTextStrikeThrough(isCanceled)
+            .build()
+
+        // Build the WeekViewEvent via the Builder
+        return WeekViewEvent.Builder<Event>(this)
+            .setId(id)
+            .setTitle(title)
+            .setStartTime(startTime)
+            .setEndTime(endTime)
+            .setLocation(location)
+            .setAllDay(isAllDay)
+            .setStyle(style)
+            .build()
+    }
+
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,6 +75,35 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val color1 = ContextCompat.getColor(this, R.color.colorAccent)
+        val event = Event(123, "title",
+
+            Calendar.getInstance().apply {
+                set(Calendar.YEAR, 2020)
+                set(Calendar.MONTH, 3)
+                set(Calendar.DAY_OF_MONTH, 8)
+                set(Calendar.HOUR_OF_DAY, 11)
+                set(Calendar.MINUTE, 11)
+                set(Calendar.SECOND, 12)
+                set(Calendar.MILLISECOND, 12)
+            },
+
+            Calendar.getInstance().apply {
+                set(Calendar.YEAR, 2020)
+                set(Calendar.MONTH, 3)
+                set(Calendar.DAY_OF_MONTH, 8)
+                set(Calendar.HOUR_OF_DAY, 12)
+                set(Calendar.MINUTE, 11)
+                set(Calendar.SECOND, 12)
+                set(Calendar.MILLISECOND, 12)
+            },
+
+            "123", color1, false, true)
+
+        findViewById<WeekView<Event>>(R.id.weekView).submit(
+            listOf(event.toWeekViewEvent())
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
