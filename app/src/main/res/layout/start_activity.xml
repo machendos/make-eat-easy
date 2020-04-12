@@ -41,5 +41,18 @@
         android:layout_height="wrap_content"
         android:text="Register"/>
 
+    <EditText
+        android:id="@+id/email_pass_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email for reset pass"/>
+
+
+    <Button
+        android:id="@+id/pass_reset_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset pass"/>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>
