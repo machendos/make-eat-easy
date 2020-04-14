@@ -62,11 +62,13 @@ dependencies {
 
 
 
-//    implementation 'com.google.firebase:firebase-core:17.4.0'
+    implementation 'com.google.firebase:firebase-core:17.4.0'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
 //    implementation 'com.google.firebase:firebase-database:19.3.0'
 
 //    implementation 'com.google.firebase:firebase-database-ktx:19.3.0'
+
+    implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
 
     implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
 
