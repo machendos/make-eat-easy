@@ -1,5 +1,6 @@
 package com.example.make_eat_easy
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -20,6 +21,7 @@ class StartActivity: AppCompatActivity() {
             Toast.makeText(this, "Please authorise", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, "Already signin", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, FirebaseInteract::class.java))
         }
 
         Toast.makeText(this, auth.languageCode, Toast.LENGTH_LONG).show()
