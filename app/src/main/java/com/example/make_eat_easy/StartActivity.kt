@@ -8,6 +8,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class StartActivity: AppCompatActivity() {
 
@@ -18,9 +20,10 @@ class StartActivity: AppCompatActivity() {
         setContentView(R.layout.start_activity)
 
         if (FirebaseAuth.getInstance().currentUser == null) {
+
             Toast.makeText(this, "Please authorise", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(this, "Already signin", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "${FirebaseAuth.getInstance().uid}", Toast.LENGTH_LONG).show()
             startActivity(Intent(this, FirebaseInteract::class.java))
         }
 
@@ -49,6 +52,9 @@ class StartActivity: AppCompatActivity() {
             if (it.isSuccessful) {
                 Toast.makeText(this, "Create new user", Toast.LENGTH_LONG).show()
                 signin(email, pass)
+                Firebase.firestore.collection("userData").document(
+                    FirebaseAuth.getInstance().currentUser?.email!!
+                ).collection("category").add(mapOf<String, String>())
             } else {
                 Toast.makeText(this, "error: Create new user:: ${it.exception?.localizedMessage}", Toast.LENGTH_LONG).show()
             }
