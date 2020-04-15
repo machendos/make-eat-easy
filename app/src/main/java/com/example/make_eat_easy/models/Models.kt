@@ -15,6 +15,14 @@ class Measure(
 )
 
 class Category(
-    val categoryId: Int,
-    val categoryName: String
-)
+    categoryId: String = "",
+    categoryName: String = ""
+) {
+
+
+    val categoryId = categoryId
+
+    val categoryName = categoryName
+
+
+}
