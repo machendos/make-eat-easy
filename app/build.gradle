@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.gms.google-services'
 
@@ -37,6 +38,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
@@ -57,22 +62,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.thellmund.Android-Week-View:core:4.0.1'
 
-    implementation "androidx.room:room-runtime:2.2.5"
-    annotationProcessor "androidx.room:room-compiler:2.2.5"
-
-
-
+//    Firebase
     implementation 'com.google.firebase:firebase-core:17.4.0'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
-//    implementation 'com.google.firebase:firebase-database:19.3.0'
-
-//    implementation 'com.google.firebase:firebase-database-ktx:19.3.0'
-
     implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
-
     implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
 
+    kapt "com.android.databinding:compiler:3.0.0-beta6"
 
-    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
-    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
 }
