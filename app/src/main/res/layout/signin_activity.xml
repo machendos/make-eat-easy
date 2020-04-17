@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.make_eat_easy.viewmodels.MainViewModel" />
+            type="com.example.make_eat_easy.viewmodels.SignInViewModel" />
     </data>
 
 
@@ -17,6 +17,28 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email_signin_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.email}"
+            android:hint="Email for register"/>
+
+        <EditText
+            android:id="@+id/password_signin_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.password}"
+            android:hint="Pass for register"/>
+
+
+        <Button
+            android:id="@+id/signin_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.signIn()}"
+            android:text="Login"/>
 
 
         <Button
