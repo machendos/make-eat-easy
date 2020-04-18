@@ -19,29 +19,29 @@ class StartActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.start_activity)
 
-        if (FirebaseAuth.getInstance().currentUser == null) {
-
-            Toast.makeText(this, "Please authorise", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, "${FirebaseAuth.getInstance().uid}", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this, FirebaseInteract::class.java))
-        }
+//        if (FirebaseAuth.getInstance().currentUser == null) {
+//
+//            Toast.makeText(this, "Please authorise", Toast.LENGTH_LONG).show()
+//        } else {
+//            Toast.makeText(this, "${FirebaseAuth.getInstance().uid}", Toast.LENGTH_LONG).show()
+//            startActivity(Intent(this, FirebaseInteract::class.java))
+//        }
 
         Toast.makeText(this, auth.languageCode, Toast.LENGTH_LONG).show()
 
-        findViewById<Button>(R.id.register_button).setOnClickListener { signup(
+        findViewById<Button>(R.id.go_to_signup_button).setOnClickListener { signup(
             findViewById<EditText>(R.id.email_register).text.toString(),
             findViewById<EditText>(R.id.pass_register).text.toString()
         ) }
 
-        findViewById<Button>(R.id.login_button).setOnClickListener { signin(
-            findViewById<EditText>(R.id.email_login).text.toString(),
-            findViewById<EditText>(R.id.pass_login).text.toString()
-        ) }
+        findViewById<Button>(R.id.go_to_signin_button).setOnClickListener {
+            startActivity(Intent(this, SignIn::class.java))
+        }
 
-        findViewById<Button>(R.id.pass_reset_button).setOnClickListener { resetPass(
-            findViewById<EditText>(R.id.email_pass_reset).text.toString()
-        ) }
+        findViewById<Button>(R.id.go_to_signup_button).setOnClickListener {
+            startActivity(Intent(this, SignUp::class.java))
+        }
+
 
 
     }
@@ -65,6 +65,9 @@ class StartActivity: AppCompatActivity() {
 
     fun signin(email: String, pass: String) {
         Log.d("LOGIN", "$email $pass")
+
+        Authenticator().signIn(email, pass).addOnSuccessListener {  }
+
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
             if (it.isSuccessful) Toast.makeText(this, "Authorised", Toast.LENGTH_LONG).show()
             else Toast.makeText(this, "error: Authorised:: ${it.exception?.message}", Toast.LENGTH_LONG).show()
