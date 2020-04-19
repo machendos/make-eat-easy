@@ -21,7 +21,7 @@ class SignIn: AppCompatActivity() {
         viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
         binding.viewModel = this.viewModel
 
-        viewModel.genericEventSample.observe(this) {
+        viewModel.success.observe(this) {
             Snackbar
                 .make(binding.root, "Generic One Time Event", Snackbar.LENGTH_LONG)
                 .show()
