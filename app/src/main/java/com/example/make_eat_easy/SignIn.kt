@@ -1,5 +1,6 @@
 package com.example.make_eat_easy
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -22,9 +23,8 @@ class SignIn: AppCompatActivity() {
         binding.viewModel = this.viewModel
 
         viewModel.success.observe(this) {
-            Snackbar
-                .make(binding.root, "Generic One Time Event", Snackbar.LENGTH_LONG)
-                .show()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         viewModel.error.observe(this) {
