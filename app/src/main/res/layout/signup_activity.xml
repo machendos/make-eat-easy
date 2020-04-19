@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.make_eat_easy.viewmodels.SignUpViewModel" />
+    </data>
 
-    <EditText
-        android:id="@+id/email_register"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email for register"/>
-
-    <EditText
-        android:id="@+id/pass_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Pass for register"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/go_to_signup_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"/>
+        <EditText
+            android:id="@+id/email_signup_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.email}"
+            android:hint="Email for register" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <EditText
+            android:id="@+id/password_signup_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.password}"
+            android:hint="Pass for register" />
+
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.signUp()}"
+            android:text="Register" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
