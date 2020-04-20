@@ -30,8 +30,8 @@ class StartActivity: AppCompatActivity() {
         Toast.makeText(this, auth.languageCode, Toast.LENGTH_LONG).show()
 
         findViewById<Button>(R.id.go_to_signup_button).setOnClickListener { signup(
-            findViewById<EditText>(R.id.email_register).text.toString(),
-            findViewById<EditText>(R.id.pass_register).text.toString()
+            findViewById<EditText>(R.id.email_signup_field).text.toString(),
+            findViewById<EditText>(R.id.password_signup_field).text.toString()
         ) }
 
         findViewById<Button>(R.id.go_to_signin_button).setOnClickListener {
