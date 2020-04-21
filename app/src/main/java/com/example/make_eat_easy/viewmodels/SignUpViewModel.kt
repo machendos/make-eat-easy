@@ -13,6 +13,7 @@ class SignUpViewModel : ViewModel() {
         fun signUp() {
             authenticator.signUp(email, password)
             .addOnSuccessListener {
+                authenticator.signIn(email, password)
                 success.call()
             }
             .addOnFailureListener {
