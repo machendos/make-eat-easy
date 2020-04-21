@@ -6,13 +6,14 @@ import com.example.make_eat_easy.util.SingleLiveEvent
 
 class SignInViewModel : ViewModel() {
 
+    val authenticator = Authenticator()
     val success = SingleLiveEvent<Void>()
     val error = SingleLiveEvent<String>()
 
     fun fireGenericEvent() = success.call()
 
         fun signIn() {
-            Authenticator().signIn(email, password)
+            authenticator.signIn(email, password)
             .addOnSuccessListener {
                 success.call()
             }
