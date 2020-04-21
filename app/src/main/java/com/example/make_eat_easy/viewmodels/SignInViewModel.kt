@@ -6,7 +6,7 @@ import com.example.make_eat_easy.util.SingleLiveEvent
 
 class SignInViewModel : ViewModel() {
 
-    val authenticator = Authenticator()
+    private val authenticator = Authenticator()
     val success = SingleLiveEvent<Void>()
     val error = SingleLiveEvent<String>()
 
