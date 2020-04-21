@@ -20,7 +20,7 @@ class SignIn: AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.signin_activity)
         viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
-        binding.viewModel = this.viewModel
+        binding.viewModel = viewModel
 
         viewModel.success.observe(this) {
             startActivity(Intent(this, MainActivity::class.java))
