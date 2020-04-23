@@ -1,12 +1,13 @@
 package com.example.make_eat_easy.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.example.make_eat_easy.Authenticator
+import com.example.make_eat_easy.firebase.Authenticator
 import com.example.make_eat_easy.util.SingleLiveEvent
 
 class SignUpViewModel : ViewModel() {
 
-    private val authenticator = Authenticator()
+    private val authenticator =
+        Authenticator()
     val success = SingleLiveEvent<Void>()
     val error = SingleLiveEvent<String>()
 
