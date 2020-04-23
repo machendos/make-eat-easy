@@ -13,27 +13,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-interface StartNavigation {
-    fun signIn() {}
-    fun signUp() {}
-}
-
 class StartActivity: AppCompatActivity() {
 
     private lateinit var viewModel: StartViewModel
     private lateinit var binding: StartActivityBinding
 
-
-
     val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-//        object StartNavigation {
-            fun signIn() = startActivity(Intent(this, SignIn::class.java))
-            fun signUp() = startActivity(Intent(this, SignUp::class.java))
-//        }
+        super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.start_activity)
         viewModel = ViewModelProvider(this)[StartViewModel::class.java]
@@ -43,15 +32,10 @@ class StartActivity: AppCompatActivity() {
         binding.goToSignupButton
             .setOnClickListener { startActivity(Intent(this, SignUp::class.java)) }
 
-
-
-
-//        !!
         if (viewModel.alreadyLoggedIn) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-
 
     }
 
