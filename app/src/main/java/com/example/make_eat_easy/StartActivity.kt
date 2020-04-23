@@ -3,45 +3,54 @@ package com.example.make_eat_easy
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.example.make_eat_easy.databinding.StartActivityBinding
+import com.example.make_eat_easy.viewmodels.StartViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+interface StartNavigation {
+    fun signIn() {}
+    fun signUp() {}
+}
+
 class StartActivity: AppCompatActivity() {
+
+    private lateinit var viewModel: StartViewModel
+    private lateinit var binding: StartActivityBinding
+
+
 
     val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.start_activity)
 
-//        if (FirebaseAuth.getInstance().currentUser == null) {
-//
-//            Toast.makeText(this, "Please authorise", Toast.LENGTH_LONG).show()
-//        } else {
-//            Toast.makeText(this, "${FirebaseAuth.getInstance().uid}", Toast.LENGTH_LONG).show()
-//            startActivity(Intent(this, FirebaseInteract::class.java))
+//        object StartNavigation {
+            fun signIn() = startActivity(Intent(this, SignIn::class.java))
+            fun signUp() = startActivity(Intent(this, SignUp::class.java))
 //        }
 
-        Toast.makeText(this, auth.languageCode, Toast.LENGTH_LONG).show()
+        binding = DataBindingUtil.setContentView(this, R.layout.start_activity)
+        viewModel = ViewModelProvider(this)[StartViewModel::class.java]
 
-        findViewById<Button>(R.id.go_to_signup_button).setOnClickListener { signup(
-            findViewById<EditText>(R.id.email_signup_field).text.toString(),
-            findViewById<EditText>(R.id.password_signup_field).text.toString()
-        ) }
+        binding.goToSigninButton
+            .setOnClickListener { startActivity(Intent(this, SignIn::class.java)) }
+        binding.goToSignupButton
+            .setOnClickListener { startActivity(Intent(this, SignUp::class.java)) }
 
-        findViewById<Button>(R.id.go_to_signin_button).setOnClickListener {
-            startActivity(Intent(this, SignIn::class.java))
+
+
+
+//        !!
+        if (viewModel.alreadyLoggedIn) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
-
-        findViewById<Button>(R.id.go_to_signup_button).setOnClickListener {
-            startActivity(Intent(this, SignUp::class.java))
-        }
-
 
 
     }

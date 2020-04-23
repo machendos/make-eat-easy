@@ -16,5 +16,7 @@ class Authenticator {
 
     fun resetPassword(email: String) { }
 
+    fun alreadyLoggedIn() = user == null
+
     fun getEmail() = FirebaseAuth.getInstance().currentUser?.email!!
 }
