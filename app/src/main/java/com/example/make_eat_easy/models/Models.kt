@@ -1,11 +1,16 @@
 package com.example.make_eat_easy.models
 
 class Product(
-    val productId: Int,
-    val productName: String,
-    val measureId: Int,
-    val categoryId: Int
-)
+    productId: String = "",
+    productName: String = "",
+    measureId: String = "",
+    categoryId: String = ""
+) {
+    val productId = productId
+    var productName = productName
+    var measureId = measureId
+    var categoryId =categoryId
+}
 
 class Measure(
     val measureId: Int,
@@ -16,13 +21,15 @@ class Measure(
 
 class Category(
     categoryId: String = "",
-    categoryName: String = ""
-) {
+    categoryName: String = "",
+    order: Int = 0
 
+) {
 
     val categoryId = categoryId
 
     val categoryName = categoryName
 
+    val order = order
 
 }
