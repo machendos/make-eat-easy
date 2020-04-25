@@ -21,7 +21,8 @@ class StartActivity: AppCompatActivity() {
         viewModel = ViewModelProvider(this)[StartViewModel::class.java]
 
         if (viewModel.alreadyLoggedIn) {
-            startActivity(Intent(this, MainActivity::class.java))
+//            TODO: change to the main activity
+            startActivity(Intent(this, RecycleMultipleTypes::class.java))
             finish()
         }
 
