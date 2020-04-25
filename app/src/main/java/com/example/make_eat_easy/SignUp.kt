@@ -23,6 +23,7 @@ class SignUp: AppCompatActivity() {
         binding.viewModel = this.viewModel
 
         viewModel.success.observe(this) {
+//            TODO: automatically signin
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

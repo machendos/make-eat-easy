@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.CategoryAdapter
+import com.example.make_eat_easy.firebase.Post
 import com.example.make_eat_easy.models.Category
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.random.Random
 
 class FirebaseInteract : AppCompatActivity() {
 
@@ -39,14 +39,9 @@ class FirebaseInteract : AppCompatActivity() {
 
         val categoryName = findViewById<EditText>(R.id.category_name_edit).text.toString()
 
-        val index = Random.nextInt(0, 1000)
-
-        categoryCollection.add(Category(index.toString(), categoryName))
-        .addOnSuccessListener {
-            Toast.makeText(this, "ADD!", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener {
-            Toast.makeText(this, "FAIL to add: ${it.message}", Toast.LENGTH_LONG).show()
-        }
+       Post().postCategory(categoryName)
+           .addOnSuccessListener { Toast.makeText(this, "ADD!", Toast.LENGTH_LONG).show() }
+           .addOnFailureListener { Toast.makeText(this, "FAIL to add: ${it.message}", Toast.LENGTH_LONG).show() }
 
     }
 
