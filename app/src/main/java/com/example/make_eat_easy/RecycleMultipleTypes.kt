@@ -1,9 +1,9 @@
 package com.example.make_eat_easy
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.NewAdapter
@@ -18,12 +18,15 @@ class RecycleMultipleTypes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_firebase_interact)
 
+
         val productRepository = ProductsRepository()
-        productRepository.products.observe(this) {
-            Log.d("listSize", it.size.toString())
-        }
 
         adapter = NewAdapter(productRepository.products)
+
+        productRepository.products.observe(this) {
+            adapter.notifyDataSetChanged()
+        }
+
 
         showCategories()
 
@@ -37,53 +40,53 @@ class RecycleMultipleTypes : AppCompatActivity() {
         rc.layoutManager = LinearLayoutManager(this)
         rc.adapter = adapter
 
-//        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP, ItemTouchHelper.LEFT) {
-//
-//            override fun getMovementFlags(
-//                recyclerView: RecyclerView,
-//                viewHolder: ViewHolder
-//            ): Int {
-//                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-//                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-//                return ItemTouchHelper.Callback.makeMovementFlags(
-//                    dragFlags,
-//                    swipeFlags
-//                )
-//            }
-////            override fun isLongPressDragEnabled(): Boolean {
-////                return true
-////            }
-//            override fun isItemViewSwipeEnabled(): Boolean {
+        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP, ItemTouchHelper.LEFT) {
+
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
+                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                return ItemTouchHelper.Callback.makeMovementFlags(
+                    dragFlags,
+                    swipeFlags
+                )
+            }
+//            override fun isLongPressDragEnabled(): Boolean {
 //                return true
 //            }
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: ViewHolder,
-//                target: ViewHolder
-//            ): Boolean {
-//
+            override fun isItemViewSwipeEnabled(): Boolean {
+                return true
+            }
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+
 //                Toast.makeText(applicationContext, "Move", Toast.LENGTH_LONG).show()
 //                    adapter.onItemMove(viewHolder.adapterPosition,
 //                        target.adapterPosition
 //                    )
-//                return true
-//            }
-//            override fun onMoved(
-//                recyclerView: RecyclerView,
-//                viewHolder: ViewHolder,
-//                fromPos: Int,
-//                target: ViewHolder,
-//                toPos: Int,
-//                x: Int,
-//                y: Int
-//            ) {
-//                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
-//            }
-//            override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-//
-//                adapter.deleteItem(viewHolder.adapterPosition)
-//            }
-//        }).attachToRecyclerView(rc)
+                return false
+            }
+            override fun onMoved(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                fromPos: Int,
+                target: RecyclerView.ViewHolder,
+                toPos: Int,
+                x: Int,
+                y: Int
+            ) {
+                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                adapter.deleteProduct(viewHolder.adapterPosition)
+            }
+        }).attachToRecyclerView(rc)
 
 
     }
