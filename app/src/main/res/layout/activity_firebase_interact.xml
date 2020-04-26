@@ -11,17 +11,28 @@
     tools:context=".FirebaseInteract">
 
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Product name"
+            android:id="@+id/product_name_edit"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category name"
+            android:id="@+id/category_name_edit"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Category name"
-        android:id="@+id/category_name_edit"/>
+        android:hint="Measure name"
+        android:id="@+id/measure_name_edit"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/set_category_button"
-        android:text="Add new category"/>
+        android:text="Add new product"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_v"
