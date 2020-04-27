@@ -65,5 +65,10 @@ class ProductsRepository {
             }
     }
 
+    fun addProduct(productId: String, productName: String, categoryId: String, measureId: String) {
+        collectionCategory.document(productId).set(Product(productId, productName, measureId, categoryId))
+    }
+
+
 }
 
