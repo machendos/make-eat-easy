@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.firebase
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.make_eat_easy.models.Product
 import com.google.firebase.firestore.DocumentChange
@@ -13,7 +12,7 @@ class ProductsRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
-    private val collectionCategory = db
+    private val productCategory = db
         .collection("userData")
         .document(Authenticator().getEmail())
         .collection("product")
@@ -27,11 +26,9 @@ class ProductsRepository {
             .setPersistenceEnabled(false)
             .build()
 
-            collectionCategory.addSnapshotListener { snapshot, _ ->
+            productCategory.addSnapshotListener { snapshot, _ ->
 
                 snapshot!!.documentChanges.forEach { documentChange ->
-
-                    Log.d("debuggg", documentChange.document.data.toString())
 
                     val document = documentChange.document
                     val productId = document.get("productId") as String
@@ -60,13 +57,11 @@ class ProductsRepository {
                     products.postValue(products.value)
                 }
 
-                Log.d("debuggg", "SNAPSHOT!")
-
             }
     }
 
     fun addProduct(productId: String, productName: String, categoryId: String, measureId: String) {
-        collectionCategory.document(productId).set(Product(productId, productName, measureId, categoryId))
+        productCategory.document(productId).set(Product(productId, productName, measureId, categoryId))
     }
 
 
