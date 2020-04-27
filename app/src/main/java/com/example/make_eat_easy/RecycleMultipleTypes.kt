@@ -1,6 +1,8 @@
 package com.example.make_eat_easy
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.NewAdapter
 import com.example.make_eat_easy.firebase.ProductsRepository
+import kotlin.random.Random
 
 
 class RecycleMultipleTypes : AppCompatActivity() {
@@ -29,6 +32,13 @@ class RecycleMultipleTypes : AppCompatActivity() {
 
 
         showCategories()
+
+        findViewById<Button>(R.id.set_category_button).setOnClickListener {
+            val product = findViewById<EditText>(R.id.product_name_edit).text.toString()
+            val category = findViewById<EditText>(R.id.category_name_edit).text.toString()
+            val measure = findViewById<EditText>(R.id.measure_name_edit).text.toString()
+            productRepository.addProduct(Random.nextInt().toString(), product, category, measure)
+        }
 
     }
 
