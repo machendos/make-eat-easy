@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,19 +49,16 @@ class NewAdapter(val products: MutableLiveData<MutableList<Product>>):
     override fun getItemCount() = products.value!!.size
 
     fun deleteProduct(position: Int) {
+
         val productId = products.value!![position].productId
-        products.value!!.removeAt(position)
-        notifyDataSetChanged()
 
         FirebaseFirestore
             .getInstance()
             .collection("userData")
             .document(Authenticator().getEmail())
-            .collection("product").document(productId + "asd").delete().addOnFailureListener {
-                Log.d("debuggg", it.message)
-            }.addOnSuccessListener {
-                Log.d("debuggg", "REAT")
-            }
+            .collection("product")
+            .document(productId)
+            .delete()
 
     }
 
