@@ -11,20 +11,23 @@ class ProductsRepository {
 
     var products: MutableLiveData<MutableList<Product>> = MutableLiveData()
 
+    private val db = FirebaseFirestore.getInstance()
+
+    private val collectionCategory = db
+        .collection("userData")
+        .document(Authenticator().getEmail())
+        .collection("product")
+
+
+
     init {
         products.value = mutableListOf()
-
-        val db = FirebaseFirestore
-            .getInstance()
 
         db.firestoreSettings = FirebaseFirestoreSettings.Builder()
             .setPersistenceEnabled(false)
             .build()
 
-                db
-            .collection("userData")
-            .document(Authenticator().getEmail())
-            .collection("product").addSnapshotListener { snapshot, _ ->
+            collectionCategory.addSnapshotListener { snapshot, _ ->
 
                 snapshot!!.documentChanges.forEach { documentChange ->
 
