@@ -1,10 +1,10 @@
 package com.example.make_eat_easy.models
 
 class Product(
-    productId: String = "",
+    productId: Int = 0,
     productName: String = "",
-    measureId: String = "",
-    categoryId: String = ""
+    measureId: Int = 0,
+    categoryId: Int = 0
 ) {
     val productId = productId
     var productName = productName
@@ -13,11 +13,16 @@ class Product(
 }
 
 class Measure(
-    val measureId: Int,
-    val measureName: String,
-    val parentMeasureId: Int,
-    val parentMeasureFactor: Float
-)
+    measureId: Int = 0,
+    measureName: String = "",
+    parentMeasureId: Int? = 0,
+    parentMeasureFactor: Float = 0f
+) {
+    var measureId = measureId
+    var measureName = measureName
+    var parentMeasureId = parentMeasureId
+    var parentMeasureFactor = parentMeasureFactor
+}
 
 class Category(
     categoryId: String = "",
