@@ -24,7 +24,7 @@ class RecycleMultipleTypes : AppCompatActivity() {
 
         val productRepository = ProductsRepository()
 
-        adapter = NewAdapter(productRepository.products)
+        adapter = NewAdapter(productRepository.products, productRepository.measures)
 
         productRepository.products.observe(this) {
             adapter.notifyDataSetChanged()
@@ -37,7 +37,7 @@ class RecycleMultipleTypes : AppCompatActivity() {
             val product = findViewById<EditText>(R.id.product_name_edit).text.toString()
             val category = findViewById<EditText>(R.id.category_name_edit).text.toString()
             val measure = findViewById<EditText>(R.id.measure_name_edit).text.toString()
-            productRepository.addProduct(Random.nextInt().toString(), product, category, measure)
+            productRepository.addProduct(Random.nextInt(), product, category.toInt(), measure.toInt())
         }
 
     }

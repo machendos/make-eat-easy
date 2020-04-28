@@ -16,7 +16,7 @@ class Measure(
     measureId: Int = 0,
     measureName: String = "",
     parentMeasureId: Int? = 0,
-    parentMeasureFactor: Float = 0f
+    parentMeasureFactor: Double = 0.0
 ) {
     var measureId = measureId
     var measureName = measureName

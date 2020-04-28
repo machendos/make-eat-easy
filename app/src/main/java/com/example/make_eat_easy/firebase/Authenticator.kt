@@ -10,7 +10,6 @@ class Authenticator {
     fun signIn(email: String, password: String) =
         auth.signInWithEmailAndPassword(email, password)
 
-
     fun signUp(email: String, password: String) =
         auth.createUserWithEmailAndPassword(email, password)
 

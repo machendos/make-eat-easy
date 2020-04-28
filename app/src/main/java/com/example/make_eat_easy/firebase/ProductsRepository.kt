@@ -29,10 +29,10 @@ class ProductsRepository {
 
             snapshot!!.documentChanges.forEach { documentChange ->
                 val document = documentChange.document
-                val measureId = document.get("measureId") as Int
+                val measureId = (document.get("measureId") as Long).toInt()
                 val measureName = document.get("measureName") as String
-                val parentMeasureId = document.get("parentMeasureId") as Int?
-                val parentMeasureFactor = document.get("parentMeasureFactor") as Float
+                val parentMeasureId = (document.get("parentMeasureId") as Long?)?.toInt()
+                val parentMeasureFactor = document.get("parentMeasureFactor") as Double
 
                 when (documentChange.type) {
 
@@ -62,10 +62,10 @@ class ProductsRepository {
 
             snapshot!!.documentChanges.forEach { documentChange ->
                 val document = documentChange.document
-                val productId = document.get("productId") as Int
+                val productId = (document.get("productId") as Long).toInt()
                 val productName = document.get("productName") as String
-                val measureId = document.get("measureId") as Int
-                val categoryId = document.get("categoryId") as Int
+                val measureId = (document.get("measureId") as Long).toInt()
+                val categoryId = (document.get("categoryId") as Long).toInt()
 
                 when (documentChange.type) {
 
