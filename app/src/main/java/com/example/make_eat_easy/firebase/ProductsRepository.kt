@@ -23,9 +23,7 @@ class ProductsRepository {
         .document(Authenticator().getEmail())
         .collection("measure")
 
-
     init {
-
 
         measureCategory.addSnapshotListener { snapshot, _ ->
 
@@ -53,6 +51,7 @@ class ProductsRepository {
                         val index = measures.value!!.indexOfFirst { it.measureId == measureId }
                         measures.value!!.removeAt(index)
                     }
+
 
                 }
                 measures.postValue(measures.value)
@@ -94,12 +93,10 @@ class ProductsRepository {
 
     }
 
-
     fun addProduct(productId: String, productName: String, categoryId: String, measureId: String) {
         productCategory.document(productId)
             .set(Product(productId, productName, measureId, categoryId))
     }
-
 
 }
 
