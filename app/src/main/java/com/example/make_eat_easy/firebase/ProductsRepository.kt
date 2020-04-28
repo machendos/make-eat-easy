@@ -62,10 +62,10 @@ class ProductsRepository {
 
             snapshot!!.documentChanges.forEach { documentChange ->
                 val document = documentChange.document
-                val productId = document.get("productId") as String
+                val productId = document.get("productId") as Int
                 val productName = document.get("productName") as String
-                val measureId = document.get("measureId") as String
-                val categoryId = document.get("categoryId") as String
+                val measureId = document.get("measureId") as Int
+                val categoryId = document.get("categoryId") as Int
 
                 when (documentChange.type) {
 
@@ -93,8 +93,8 @@ class ProductsRepository {
 
     }
 
-    fun addProduct(productId: String, productName: String, categoryId: String, measureId: String) {
-        productCategory.document(productId)
+    fun addProduct(productId: Int, productName: String, categoryId: Int, measureId: Int) {
+        productCategory.document(productId.toString())
             .set(Product(productId, productName, measureId, categoryId))
     }
 
