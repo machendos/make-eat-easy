@@ -8,11 +8,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.firebase.Authenticator
+import com.example.make_eat_easy.models.Measure
 import com.example.make_eat_easy.models.Product
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class NewAdapter(val products: MutableLiveData<MutableList<Product>>):
+class NewAdapter(
+    val products: MutableLiveData<MutableList<Product>>,
+    val measures: MutableLiveData<MutableList<Measure>>
+):
     RecyclerView.Adapter<NewAdapter.ProductHolder>() {
 
 //    class CategoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,9 +30,14 @@ class NewAdapter(val products: MutableLiveData<MutableList<Product>>):
     }
 
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {
+
+        val product = products.value!![position]
+        val measureId = product.measureId
+        val measure = measures.value!!.find { it.measureId == measureId }
+
         holder.productNameView.text = products.value!![position].productName
-        holder.categoryNameView.text = products.value!![position].categoryId
-        holder.measureNameView.text = products.value!![position].measureId
+        holder.categoryNameView.text = products.value!![position].categoryId.toString()
+        holder.measureNameView.text = measure!!.measureName
     }
 
 //    override fun getItemViewType(position: Int): Int {
@@ -57,7 +66,7 @@ class NewAdapter(val products: MutableLiveData<MutableList<Product>>):
             .collection("userData")
             .document(Authenticator().getEmail())
             .collection("product")
-            .document(productId)
+            .document(productId.toString())
             .delete()
 
     }
