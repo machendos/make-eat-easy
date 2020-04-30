@@ -25,16 +25,16 @@ class Measure(
 }
 
 class Category(
-    categoryId: String = "",
+    categoryId: Int = 0,
     categoryName: String = "",
-    order: Int = 0
+//    order: Int = 0
 
 ) {
 
-    val categoryId = categoryId
+    var categoryId = categoryId
 
-    val categoryName = categoryName
+    var categoryName = categoryName
 
-    val order = order
+//    val order = order
 
 }
