@@ -29,6 +29,7 @@ class ProductsRepository {
         .collection("userData")
         .document(Authenticator().getEmail())
         .collection("category")
+        .orderBy("order")
 
     init {
 
@@ -38,16 +39,18 @@ class ProductsRepository {
                 val document = documentChange.document
                 val categoryId = (document.get("categoryId") as Long).toInt()
                 val categoryName = document.get("categoryName") as String
+                val order = (document.get("order") as Long).toInt()
 
                 when (documentChange.type) {
 
                     DocumentChange.Type.ADDED ->
-                        categories.value!!.add(Category(categoryId, categoryName))
+                        categories.value!!.add(Category(categoryId, categoryName, order))
 
                     DocumentChange.Type.MODIFIED -> {
                         val element = categories.value!!.find { it.categoryId == categoryId }
                         element?.categoryId = categoryId
                         element?.categoryName = categoryName
+                        element?.order = order
                     }
 
                     DocumentChange.Type.REMOVED -> {
@@ -103,17 +106,19 @@ class ProductsRepository {
                 val productName = document.get("productName") as String
                 val measureId = (document.get("measureId") as Long).toInt()
                 val categoryId = (document.get("categoryId") as Long).toInt()
+                val order = (document.get("order") as Long).toInt()
 
                 when (documentChange.type) {
 
                     DocumentChange.Type.ADDED ->
-                        products.value!!.add(Product(productId, productName, measureId, categoryId))
+                        products.value!!.add(Product(productId, productName, measureId, categoryId, order))
 
                     DocumentChange.Type.MODIFIED -> {
                         val element = products.value!!.find { it.productId == productId }
                         element?.productName = productName
                         element?.measureId = measureId
                         element?.categoryId = categoryId
+                        element?.order = order
                     }
 
                     DocumentChange.Type.REMOVED -> {
