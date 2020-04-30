@@ -38,3 +38,32 @@ class Category(
 //    val order = order
 
 }
+
+class CategoryProduct() {
+
+    var isProduct: Boolean = true
+
+    var productId: Int = 0
+    var productName: String = ""
+    var measureId: Int = 0
+
+    var categoryName: String = ""
+
+    var categoryId: Int = 0
+
+    constructor(category: Category) : this() {
+        isProduct = false
+
+        categoryId = category.categoryId
+        categoryName = category.categoryName
+    }
+
+    constructor(product: Product) : this() {
+        var productId = product.productId
+        var productName = product.productName
+        var measureId = product.measureId
+        var categoryId = product.categoryId
+    }
+
+
+}
