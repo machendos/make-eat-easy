@@ -13,19 +13,20 @@ class ProductsRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
-    private val productCategory = db
+    private val productCollection = db
         .collection("userData")
         .document(Authenticator().getEmail())
         .collection("product")
 
-    private val measureCategory = db
+    private val measureCollection = db
         .collection("userData")
         .document(Authenticator().getEmail())
         .collection("measure")
 
+
     init {
 
-        measureCategory.addSnapshotListener { snapshot, _ ->
+        measureCollection.addSnapshotListener { snapshot, _ ->
 
             snapshot!!.documentChanges.forEach { documentChange ->
                 val document = documentChange.document
@@ -58,7 +59,7 @@ class ProductsRepository {
             }
         }
 
-        productCategory.addSnapshotListener { snapshot, _ ->
+        productCollection.addSnapshotListener { snapshot, _ ->
 
             snapshot!!.documentChanges.forEach { documentChange ->
                 val document = documentChange.document
@@ -94,7 +95,7 @@ class ProductsRepository {
     }
 
     fun addProduct(productId: Int, productName: String, categoryId: Int, measureId: Int) {
-        productCategory.document(productId.toString())
+        productCollection.document(productId.toString())
             .set(Product(productId, productName, measureId, categoryId))
     }
 
