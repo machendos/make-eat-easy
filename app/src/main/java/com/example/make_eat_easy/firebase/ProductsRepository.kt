@@ -1,6 +1,7 @@
 package com.example.make_eat_easy.firebase
 
 import androidx.lifecycle.MutableLiveData
+import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.Measure
 import com.example.make_eat_easy.models.Product
 import com.google.firebase.firestore.DocumentChange
@@ -10,6 +11,7 @@ class ProductsRepository {
 
     var products: MutableLiveData<MutableList<Product>> = MutableLiveData(mutableListOf())
     var measures: MutableLiveData<MutableList<Measure>> = MutableLiveData(mutableListOf())
+    var categories: MutableLiveData<MutableList<Category>> = MutableLiveData(mutableListOf())
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -23,8 +25,42 @@ class ProductsRepository {
         .document(Authenticator().getEmail())
         .collection("measure")
 
+    private val categoryCollection = db
+        .collection("userData")
+        .document(Authenticator().getEmail())
+        .collection("category")
 
     init {
+
+        categoryCollection.addSnapshotListener { snapshot, _ ->
+
+            snapshot!!.documentChanges.forEach { documentChange ->
+                val document = documentChange.document
+                val categoryId = (document.get("categoryId") as Long).toInt()
+                val categoryName = document.get("categoryName") as String
+
+                when (documentChange.type) {
+
+                    DocumentChange.Type.ADDED ->
+                        categories.value!!.add(Category(categoryId, categoryName))
+
+                    DocumentChange.Type.MODIFIED -> {
+                        val element = categories.value!!.find { it.categoryId == categoryId }
+                        element?.categoryId = categoryId
+                        element?.categoryName = categoryName
+                    }
+
+                    DocumentChange.Type.REMOVED -> {
+                        val index = categories.value!!.indexOfFirst { it.categoryId == categoryId }
+                        categories.value!!.removeAt(index)
+                    }
+
+
+                }
+                categories.postValue(categories.value)
+            }
+
+        }
 
         measureCollection.addSnapshotListener { snapshot, _ ->
 
