@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.make_eat_easy.databinding.StartActivityBinding
 import com.example.make_eat_easy.viewmodels.StartViewModel
+import com.example.make_eat_easy.views.Products
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 
@@ -33,7 +34,7 @@ class StartActivity: AppCompatActivity() {
                 .build()
 
 //            TODO: change to the main activity
-            startActivity(Intent(this, RecycleMultipleTypes::class.java))
+            startActivity(Intent(this, Products::class.java))
             finish()
         }
 
