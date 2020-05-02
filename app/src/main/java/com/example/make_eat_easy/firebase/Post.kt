@@ -20,7 +20,7 @@ class Post {
 
         val index = Random.nextInt(0, 1000)
 
-        return categoryCollection.add(Category(index.toString(), categoryName, Random.nextInt(0, 1000)))
+        return categoryCollection.add(Category(index, categoryName, Random.nextInt(0, 1000)))
 
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.NewAdapter
 import com.example.make_eat_easy.firebase.ProductsRepository
+import com.example.make_eat_easy.viewmodels.ProductViewModel
 import kotlin.random.Random
 
 
@@ -24,12 +25,13 @@ class RecycleMultipleTypes : AppCompatActivity() {
 
         val productRepository = ProductsRepository()
 
-        adapter = NewAdapter(productRepository.products, productRepository.measures)
+        val productViewModel = ProductViewModel()
 
-        productRepository.products.observe(this) {
+        adapter = NewAdapter(productViewModel.productsCategoryList, productRepository.measures)
+
+        productViewModel.productRepository.products.observe(this) {
             adapter.notifyDataSetChanged()
         }
-
 
         showCategories()
 
