@@ -1,6 +1,7 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -20,11 +21,17 @@ class Products : AppCompatActivity() {
         val viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
 
         val productAdapter = NewAdapter(
-            viewModel.productRepository.products,
+            viewModel.productsCategoryList,
             viewModel.productRepository.measures
         )
 
-        viewModel.productRepository.products.observe(this) {
+        viewModel.productRepository.measures.observe(this) {
+            Log.d("asdasd<-view", "measure")
+            productAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.productsCategoryList.observe(this) {
+            Log.d("asdasd<-view", "product/category")
             productAdapter.notifyDataSetChanged()
         }
 
