@@ -29,7 +29,6 @@ class ProductsRepository {
         .collection("userData")
         .document(Authenticator().getEmail())
         .collection("category")
-        .orderBy("order")
 
     init {
 
@@ -43,14 +42,20 @@ class ProductsRepository {
 
                 when (documentChange.type) {
 
-                    DocumentChange.Type.ADDED ->
-                        categories.value!!.add(Category(categoryId, categoryName, order))
+                    DocumentChange.Type.ADDED -> {
+                        var targetIndex = categories.value!!.indexOfFirst { it.order >= order }
+                        targetIndex = if(targetIndex == -1) categories.value!!.size else targetIndex
+                        categories.value!!.add(targetIndex, Category(categoryId, categoryName, order))
+                    }
 
                     DocumentChange.Type.MODIFIED -> {
                         val element = categories.value!!.find { it.categoryId == categoryId }
                         element?.categoryId = categoryId
                         element?.categoryName = categoryName
                         element?.order = order
+
+//                        TODO:!!!!!!
+                        categories.value!!.sortBy { it.order }
                     }
 
                     DocumentChange.Type.REMOVED -> {
@@ -135,10 +140,10 @@ class ProductsRepository {
 
     }
 
-    fun addProduct(productId: Int, productName: String, categoryId: Int, measureId: Int) {
-        productCollection.document(productId.toString())
-            .set(Product(productId, productName, measureId, categoryId))
-    }
+//    fun addProduct(productId: Int, productName: String, categoryId: Int, measureId: Int) {
+//        productCollection.document(productId.toString())
+//            .set(Product(productId, productName, measureId, categoryId))
+//    }
 
 }
 
