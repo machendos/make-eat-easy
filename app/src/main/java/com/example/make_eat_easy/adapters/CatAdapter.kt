@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,22 +34,16 @@ class NewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        Log.d("asdasd<-RECYCLER", "bind")
-        Log.d("asdasd", productsCategories.value!!.joinToString(transform = {product -> product.toString() }))
-
         val item = productsCategories.value!![position]
 
         if (getItemViewType(position) == PRODUCT) {
-            Log.d("asdasd<-RECYCLER", "ПРОДУКТ")
             val measureId = item.measureId
             val measure = measures.value!!.find { it.measureId == measureId }
             (holder as ProductHolder).productNameView.text = item.productName
-            Log.d("asdasd<-RECYCLER-ИМЯ", item.productName)
 
 //            TODO:
-            holder.measureNameView.text = measure?.measureName ?: "gg"
+            holder.measureNameView.text = measure?.measureName ?: ""
         } else {
-            Log.d("asdasd<-RECYCLER", "НЕ ПРОДУКТ")
             (holder as CategoryHolder).categoryName.text = item.categoryName
         }
     }
