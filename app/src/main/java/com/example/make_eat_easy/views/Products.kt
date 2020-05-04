@@ -75,19 +75,6 @@ class Products : AppCompatActivity() {
                 viewModel.productRepository.deleteProduct(id)
             }
 
-            override fun getSwipeDirs(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ): Int {
-
-                if (viewHolder is NewAdapter.CategoryHolder) {
-                    Log.d("asd", "is")
-                } else Log.d("asd", "not is")
-
-                if (viewHolder is NewAdapter.CategoryHolder) return 0
-                return super.getSwipeDirs(recyclerView, viewHolder)
-            }
-
         }).attachToRecyclerView(recyclerView)
 
     }
