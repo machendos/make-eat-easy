@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.firebase.ProductsRepository
@@ -18,18 +17,27 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.addSource(productRepository.categories) {
 
-            Log.d("asdasd", "viewModel categories")
-            Log.d("asdasd", it.joinToString(transform = {product -> product.toString() }))
+            productsCategoryList.value = it.map { category -> CategoryProduct(category) } as MutableList
 
-            it.forEach { updatedCategory ->
-                val index = productsCategoryList.value!!.indexOfFirst { oldCategory ->
-                    !oldCategory.isProduct && oldCategory.order >= updatedCategory.order
+            productRepository.products.value!!.forEach { product ->
+
+                var targetIndex = productsCategoryList.value!!.size
+
+                run loop@ {
+                    productsCategoryList.value!!.forEachIndexed { index, element ->
+
+                        if (
+                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
+                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
+                        ) {
+                            targetIndex = index
+                            return@loop
+                        }
+                    }
+
                 }
-                productsCategoryList.value!!.add(
-                    if (index == -1) 0 else index,
-                    CategoryProduct(updatedCategory)
-                )
-                Log.d("asdasd", productsCategoryList.value!!.joinToString(transform = {product -> product.toString() }))
+
+                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
             }
 
             productsCategoryList.value = productsCategoryList.value
@@ -37,24 +45,30 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.addSource(productRepository.products) {
 
-            Log.d("asdasd", "viewModel products")
-            Log.d("asdasd", it.joinToString(transform = {product -> product.toString() }))
+            productsCategoryList.value = productRepository.categories.value!!.map { category -> CategoryProduct(category) } as MutableList
 
-            it.forEach { updatedProduct ->
-                val index = productsCategoryList.value!!.indexOfFirst { oldProduct ->
-                    oldProduct.isProduct && oldProduct.order >= updatedProduct.order && oldProduct.categoryId == updatedProduct.categoryId ||
-                            !oldProduct.isProduct && oldProduct.categoryId > updatedProduct.categoryId
+            productRepository.products.value!!.forEach { product ->
+
+                var targetIndex = productsCategoryList.value!!.size
+
+                run loop@ {
+                    productsCategoryList.value!!.forEachIndexed { index, element ->
+
+                        if (
+                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
+                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
+                        ) {
+                            targetIndex = index
+                            return@loop
+                        }
+                    }
+
                 }
-                productsCategoryList.value!!.add(
-                    if (index == -1) 0 else index,
-                    CategoryProduct(updatedProduct)
-                )
 
-                Log.d("asdasd", productsCategoryList.value!!.joinToString(transform = {product -> product.toString() }))
-
-                productsCategoryList.value = productsCategoryList.value
+                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
             }
 
+            productsCategoryList.value = productsCategoryList.value
         }
     }
 
