@@ -29,7 +29,6 @@
             android:parentActivityName=".StartActivity"/>
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".RecycleMultipleTypes" />
         <activity android:name=".views.Products" />
     </application>
 
