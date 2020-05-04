@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.NewAdapter
 import com.example.make_eat_easy.firebase.ProductsRepository
 import com.example.make_eat_easy.viewmodels.ProductViewModel
-import kotlin.random.Random
 
 
 class RecycleMultipleTypes : AppCompatActivity() {
@@ -39,7 +38,7 @@ class RecycleMultipleTypes : AppCompatActivity() {
             val product = findViewById<EditText>(R.id.product_name_edit).text.toString()
             val category = findViewById<EditText>(R.id.category_name_edit).text.toString()
             val measure = findViewById<EditText>(R.id.measure_name_edit).text.toString()
-            productRepository.addProduct(Random.nextInt(), product, category.toInt(), measure.toInt())
+//            productRepository.addProduct(Random.nextInt(), product, category.toInt(), measure.toInt())
         }
 
     }
