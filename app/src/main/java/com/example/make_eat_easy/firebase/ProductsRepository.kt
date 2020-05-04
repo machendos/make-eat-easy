@@ -145,5 +145,11 @@ class ProductsRepository {
 //            .set(Product(productId, productName, measureId, categoryId))
 //    }
 
+    fun deleteProduct(productId: Int) {
+        productCollection
+            .document(productId.toString())
+            .delete()
+    }
+
 }
 
