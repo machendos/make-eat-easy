@@ -1,7 +1,6 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,6 @@ import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.NewAdapter
 import com.example.make_eat_easy.databinding.ProductsBinding
 import com.example.make_eat_easy.viewmodels.ProductViewModel
-
 
 class Products : AppCompatActivity() {
 
@@ -41,10 +39,7 @@ class Products : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = productAdapter
 
-
-
-        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0, 0) {
-
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, 0) {
 
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
@@ -68,11 +63,13 @@ class Products : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
-                val id = viewModel.productsCategoryList.value!![viewHolder.adapterPosition].productId
-
-                Log.d("asd", id.toString())
+                val id = viewModel
+                    .productsCategoryList
+                    .value!![viewHolder.adapterPosition]
+                    .productId
 
                 viewModel.productRepository.deleteProduct(id)
+
             }
 
         }).attachToRecyclerView(recyclerView)
