@@ -4,19 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.firebase.Authenticator
-import com.example.make_eat_easy.models.CategoryProduct
-import com.example.make_eat_easy.models.Measure
+import com.example.make_eat_easy.viewmodels.ProductViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class ProductsAdapter(
-    val productsCategories: MediatorLiveData<MutableList<CategoryProduct>>,
-    val measures: MutableLiveData<MutableList<Measure>>
+    val productViewModel: ProductViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -40,11 +36,11 @@ class ProductsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val item = productsCategories.value!![position]
+        val item = productViewModel.productsCategoryList.value!![position]
 
         if (getItemViewType(position) == PRODUCT) {
             val measureId = item.measureId
-            val measure = measures.value!!.find { it.measureId == measureId }
+            val measure = productViewModel.productRepository.measures.value!!.find { it.measureId == measureId }
             (holder as ProductHolder).productNameView.text = item.productName
 
 //            TODO:
@@ -55,7 +51,7 @@ class ProductsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int =
-        if (productsCategories.value!![position].isProduct) PRODUCT else CATEGORY
+        if (productViewModel.productsCategoryList.value!![position].isProduct) PRODUCT else CATEGORY
 
 
     override fun onCreateViewHolder(
@@ -73,11 +69,11 @@ class ProductsAdapter(
         }
     }
 
-    override fun getItemCount() = productsCategories.value!!.size
+    override fun getItemCount() = productViewModel.productsCategoryList.value!!.size
 
     fun deleteProduct(position: Int) {
 
-        val productId = productsCategories.value!![position].productId
+        val productId = productViewModel.productsCategoryList.value!![position].productId
 
         FirebaseFirestore
             .getInstance()

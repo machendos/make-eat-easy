@@ -21,10 +21,7 @@ class Products : AppCompatActivity() {
         val binding: ProductsBinding = DataBindingUtil.setContentView(this, R.layout.products)
         val viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
 
-        val productAdapter = ProductsAdapter(
-            viewModel.productsCategoryList,
-            viewModel.productRepository.measures
-        )
+        val productAdapter = ProductsAdapter(viewModel)
 
         viewModel.productRepository.measures.observe(this) {
             productAdapter.notifyDataSetChanged()
