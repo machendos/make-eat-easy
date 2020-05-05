@@ -14,7 +14,7 @@ import com.example.make_eat_easy.models.Measure
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class NewAdapter(
+class ProductsAdapter(
     val productsCategories: MediatorLiveData<MutableList<CategoryProduct>>,
     val measures: MutableLiveData<MutableList<Measure>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -65,11 +65,11 @@ class NewAdapter(
         return if (viewType == PRODUCT) {
             val productView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.product_item, parent, false)
-            NewAdapter.ProductHolder(productView)
+            ProductsAdapter.ProductHolder(productView)
         } else {
             val categoryView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.category_item, parent, false)
-            NewAdapter.CategoryHolder(categoryView)
+            ProductsAdapter.CategoryHolder(categoryView)
         }
     }
 

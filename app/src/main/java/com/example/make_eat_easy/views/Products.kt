@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
-import com.example.make_eat_easy.adapters.NewAdapter
+import com.example.make_eat_easy.adapters.ProductsAdapter
 import com.example.make_eat_easy.databinding.ProductsBinding
 import com.example.make_eat_easy.viewmodels.ProductViewModel
 
@@ -21,7 +21,7 @@ class Products : AppCompatActivity() {
         val binding: ProductsBinding = DataBindingUtil.setContentView(this, R.layout.products)
         val viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
 
-        val productAdapter = NewAdapter(
+        val productAdapter = ProductsAdapter(
             viewModel.productsCategoryList,
             viewModel.productRepository.measures
         )
@@ -47,7 +47,7 @@ class Products : AppCompatActivity() {
             ): Int {
                 val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
                 val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-                return if (viewHolder.itemViewType == NewAdapter.CATEGORY) 0 else ItemTouchHelper.Callback.makeMovementFlags(
+                return if (viewHolder.itemViewType == ProductsAdapter.CATEGORY) 0 else ItemTouchHelper.Callback.makeMovementFlags(
                     dragFlags,
                     swipeFlags
                 )
