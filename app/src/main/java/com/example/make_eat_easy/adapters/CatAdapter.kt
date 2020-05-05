@@ -19,10 +19,16 @@ class NewAdapter(
     val measures: MutableLiveData<MutableList<Measure>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val CATEGORY = 1
-    val PRODUCT = 2
+    companion object {
+        val CATEGORY = 1
+        val PRODUCT = 2
+    }
 
     class CategoryHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
+//        init {
+//            categoryView.setFocusable(false);
+//            categoryView.setEnabled(false);
+//        }
         val categoryName = categoryView.findViewById<TextView>(R.id.category_text)
     }
 
