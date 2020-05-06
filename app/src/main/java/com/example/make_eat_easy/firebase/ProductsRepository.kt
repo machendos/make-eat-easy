@@ -110,7 +110,7 @@ class ProductsRepository {
                 val productId = (document.get("productId") as Long).toInt()
                 val productName = document.get("productName") as String
                 val measureId = (document.get("measureId") as Long).toInt()
-                val categoryId = (document.get("categoryId") as Long).toInt()
+                val categoryId = (document.get("categoryId") as Long?)?.toInt()
                 val order = (document.get("order") as Long).toInt()
 
                 when (documentChange.type) {

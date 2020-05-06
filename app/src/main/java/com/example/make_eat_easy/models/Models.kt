@@ -4,7 +4,7 @@ class Product(
     productId: Int = 0,
     productName: String = "",
     measureId: Int = 0,
-    categoryId: Int = 0,
+    categoryId: Int? = 0,
     order: Int = 0
 ) {
     val productId = productId
@@ -60,7 +60,7 @@ class CategoryProduct() {
 
     var categoryName: String = ""
 
-    var categoryId: Int = 0
+    var categoryId: Int? = 0
 
     var order: Int = 0
 
