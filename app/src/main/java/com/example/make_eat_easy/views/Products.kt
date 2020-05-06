@@ -1,6 +1,7 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -36,9 +37,9 @@ class Products : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = productAdapter
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, 0) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
 
-            override fun getMovementFlags(
+                        override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
@@ -49,14 +50,32 @@ class Products : AppCompatActivity() {
                     swipeFlags
                 )
             }
+            override fun isLongPressDragEnabled(): Boolean {
+                return true
+            }
 
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                return true
+                val draggedPosition = viewHolder.adapterPosition
+                val targetPosition = target.adapterPosition
+                val draggedOrder =
+                    viewModel.productsCategoryList.value!![draggedPosition]
+                viewModel.productsCategoryList.value!![draggedPosition] =
+                    viewModel.productsCategoryList.value!![targetPosition]
+                viewModel.productsCategoryList.value!![targetPosition] = draggedOrder
+                Log.d("asdasd", viewModel.productsCategoryList.value!!.toString())
+                productAdapter.notifyItemMoved(draggedPosition, targetPosition)
+                return false
             }
+
+//            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+//                Log.d("asdasd", actionState.toString())
+//                super.onSelectedChanged(viewHolder, actionState)
+//            }
+
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
