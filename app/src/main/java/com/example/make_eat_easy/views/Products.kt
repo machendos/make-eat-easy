@@ -1,7 +1,6 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -61,12 +60,15 @@ class Products : AppCompatActivity() {
             ): Boolean {
                 val draggedPosition = viewHolder.adapterPosition
                 val targetPosition = target.adapterPosition
-                val draggedOrder =
-                    viewModel.productsCategoryList.value!![draggedPosition]
-                viewModel.productsCategoryList.value!![draggedPosition] =
-                    viewModel.productsCategoryList.value!![targetPosition]
-                viewModel.productsCategoryList.value!![targetPosition] = draggedOrder
-                Log.d("asdasd", viewModel.productsCategoryList.value!!.toString())
+
+                val list = viewModel.productsCategoryList.value!!
+
+                val draggedElement = list[draggedPosition]
+                val targetElement = list[targetPosition]
+
+                list[draggedPosition] = targetElement
+                list[targetPosition] = draggedElement
+
                 productAdapter.notifyItemMoved(draggedPosition, targetPosition)
                 return false
             }
