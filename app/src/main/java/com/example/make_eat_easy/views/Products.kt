@@ -66,6 +66,10 @@ class Products : AppCompatActivity() {
                 val draggedElement = list[draggedPosition]
                 val targetElement = list[targetPosition]
 
+                val draggedOrder = draggedElement.order
+                draggedElement.order = targetElement.order
+                targetElement.order = draggedElement.order
+
                 list[draggedPosition] = targetElement
                 list[targetPosition] = draggedElement
 
@@ -73,10 +77,16 @@ class Products : AppCompatActivity() {
                 return false
             }
 
-//            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-//                Log.d("asdasd", actionState.toString())
-//                super.onSelectedChanged(viewHolder, actionState)
-//            }
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+                    var currCaregoryId: Int? = null
+                    viewModel.productsCategoryList.value!!.forEach {
+                        if (it.isProduct) it.categoryId = currCaregoryId
+                        else currCaregoryId = it.categoryId
+                    }
+                }
+                super.onSelectedChanged(viewHolder, actionState)
+            }
 
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
