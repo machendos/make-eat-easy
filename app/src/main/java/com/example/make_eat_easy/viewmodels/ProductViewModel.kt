@@ -15,30 +15,32 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.value = mutableListOf()
 
-        productsCategoryList.addSource(productRepository.categories) {
+        productsCategoryList.addSource(productRepository.categories) { it ->
 
             productsCategoryList.value = it.map { category -> CategoryProduct(category) } as MutableList
+            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product -> CategoryProduct(product) } as MutableList)
+            productsCategoryList.value!!.sortBy { it.order }
 
-            productRepository.products.value!!.forEach { product ->
-
-                var targetIndex = productsCategoryList.value!!.size
-
-                run loop@ {
-                    productsCategoryList.value!!.forEachIndexed { index, element ->
-
-                        if (
-                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
-                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
-                        ) {
-                            targetIndex = index
-                            return@loop
-                        }
-                    }
-
-                }
-
-                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
-            }
+//            productRepository.products.value!!.forEach { product ->
+//
+//                var targetIndex = productsCategoryList.value!!.size
+//
+//                run loop@ {
+//                    productsCategoryList.value!!.forEachIndexed { index, element ->
+//
+//                        if (
+//                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
+//                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
+//                        ) {
+//                            targetIndex = index
+//                            return@loop
+//                        }
+//                    }
+//
+//                }
+//
+//                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
+//            }
 
             productsCategoryList.value = productsCategoryList.value
         }
@@ -46,27 +48,29 @@ class ProductViewModel : ViewModel() {
         productsCategoryList.addSource(productRepository.products) {
 
             productsCategoryList.value = productRepository.categories.value!!.map { category -> CategoryProduct(category) } as MutableList
+            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product -> CategoryProduct(product) } as MutableList)
+            productsCategoryList.value!!.sortBy { it.order }
 
-            productRepository.products.value!!.forEach { product ->
+//            productRepository.products.value!!.forEach { product ->
+//
+//                var targetIndex = productsCategoryList.value!!.size
+//
+//                run loop@ {
+//                    productsCategoryList.value!!.forEachIndexed { index, element ->
+//
+//                        if (
+//                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
+//                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
+//                        ) {
+//                            targetIndex = index
+//                            return@loop
+//                        }
+//                    }
+//
+//                }
 
-                var targetIndex = productsCategoryList.value!!.size
-
-                run loop@ {
-                    productsCategoryList.value!!.forEachIndexed { index, element ->
-
-                        if (
-                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
-                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
-                        ) {
-                            targetIndex = index
-                            return@loop
-                        }
-                    }
-
-                }
-
-                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
-            }
+//                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
+//            }
 
             productsCategoryList.value = productsCategoryList.value
         }

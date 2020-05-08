@@ -2,6 +2,7 @@ package com.example.make_eat_easy.firebase
 
 import androidx.lifecycle.MutableLiveData
 import com.example.make_eat_easy.models.Category
+import com.example.make_eat_easy.models.CategoryProduct
 import com.example.make_eat_easy.models.Measure
 import com.example.make_eat_easy.models.Product
 import com.google.firebase.firestore.DocumentChange
@@ -149,6 +150,34 @@ class ProductsRepository {
         productCollection
             .document(productId.toString())
             .delete()
+    }
+
+    fun updateProductOrders(productsCategories: MutableList<CategoryProduct>) {
+        db.runBatch { batch ->
+            productsCategories.forEach {
+
+                if (it.isProduct) {
+                    batch.update(
+                        productCollection.document(it.productId.toString()),
+                        "order",
+                        it.order)
+
+                    batch.update(
+                        productCollection.document(it.productId.toString()),
+                        "categoryId",
+                        it.categoryId)
+                } else {
+                    batch.update(
+                        categoryCollection.document(it.categoryId.toString()),
+                        "order",
+                        it.order)
+                }
+
+
+            }
+
+
+        }
     }
 
 }
