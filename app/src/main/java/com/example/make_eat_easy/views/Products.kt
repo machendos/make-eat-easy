@@ -68,7 +68,7 @@ class Products : AppCompatActivity() {
 
                 val draggedOrder = draggedElement.order
                 draggedElement.order = targetElement.order
-                targetElement.order = draggedElement.order
+                targetElement.order = draggedOrder
 
                 list[draggedPosition] = targetElement
                 list[targetPosition] = draggedElement
@@ -84,6 +84,8 @@ class Products : AppCompatActivity() {
                         if (it.isProduct) it.categoryId = currCaregoryId
                         else currCaregoryId = it.categoryId
                     }
+
+                    viewModel.productRepository.updateProductOrders(viewModel.productsCategoryList.value!!)
                 }
                 super.onSelectedChanged(viewHolder, actionState)
             }
