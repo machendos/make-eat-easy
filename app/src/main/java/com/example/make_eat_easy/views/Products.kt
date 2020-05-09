@@ -39,11 +39,16 @@ class Products : AppCompatActivity() {
 
             val dialogView = this.layoutInflater.inflate(R.layout.add_product_dialog, null)
 
-            dialogView.product_name.setAdapter(ArrayAdapter<String>(this, R.layout.element_autocomplete, R.id.autocomplete_element, arrayOf("ad", "asd", "asdf")))
+            dialogView.product_name.setAdapter(ArrayAdapter<String>(
+                this,
+                R.layout.element_autocomplete,
+                R.id.autocomplete_element,
+                viewModel.productRepository.categories.value!!.map { it.categoryName }
+            ))
 
             AlertDialog.Builder(this)
                 .setView(dialogView)
-                .setTitle("asdasdasd")
+                .setTitle("Add new product")
                 .setPositiveButton("Add") { _, _ ->
                     Toast.makeText(this, dialogView.product_name.text.toString(), Toast.LENGTH_LONG)
                         .show()
