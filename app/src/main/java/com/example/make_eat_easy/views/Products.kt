@@ -1,6 +1,9 @@
 package com.example.make_eat_easy.views
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +15,7 @@ import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.ProductsAdapter
 import com.example.make_eat_easy.databinding.ProductsBinding
 import com.example.make_eat_easy.viewmodels.ProductViewModel
+import kotlinx.android.synthetic.main.add_product_dialog.view.*
 
 class Products : AppCompatActivity() {
 
@@ -31,14 +35,28 @@ class Products : AppCompatActivity() {
             productAdapter.notifyDataSetChanged()
         }
 
+        binding.goToAddProduct.setOnClickListener {
+
+            val dialogView = this.layoutInflater.inflate(R.layout.add_product_dialog, null)
+
+//            AddProductDialog().show(supportFragmentManager, "Nice")
+            AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setPositiveButton("asd", DialogInterface.OnClickListener { dialog, which ->
+                    Toast.makeText(this, dialogView.product_name.text.toString(), Toast.LENGTH_LONG)
+                        .show()
+                }).show()
+        }
+
         val recyclerView = binding.productsList
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = productAdapter
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
 
-                        override fun getMovementFlags(
+            override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
@@ -49,6 +67,7 @@ class Products : AppCompatActivity() {
                     swipeFlags
                 )
             }
+
             override fun isLongPressDragEnabled(): Boolean {
                 return true
             }
