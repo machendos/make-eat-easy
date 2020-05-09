@@ -8,6 +8,8 @@ import com.example.make_eat_easy.models.Product
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 
+data class AddedCategory(val categoryId: Int, val categoryOrder: Int)
+
 class ProductsRepository {
 
     var products: MutableLiveData<MutableList<Product>> = MutableLiveData(mutableListOf())
@@ -141,10 +143,14 @@ class ProductsRepository {
 
     }
 
-//    fun addProduct(productId: Int, productName: String, categoryId: Int, measureId: Int) {
-//        productCollection.document(productId.toString())
-//            .set(Product(productId, productName, measureId, categoryId))
-//    }
+    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int) {
+
+        var maxId = 0
+        products.value!!
+            .forEach { if (it.productId >= maxId) maxId = it.productId + 1 }
+        productCollection.document(maxId.toString())
+            .set(Product(maxId, productName, measureId, categoryId, order))
+    }
 
     fun deleteProduct(productId: Int) {
         productCollection
@@ -179,6 +185,25 @@ class ProductsRepository {
 
         }
     }
+
+    fun addMeasure(measureName: String): Int {
+        val newId = measures.value!!.map { it.measureId }.sortedDescending()[0] + 1
+        measureCollection.document(newId.toString()).set(Measure(newId, measureName))
+        return newId
+    }
+
+
+    fun addCategory(categoryName: String): AddedCategory {
+        val newId = categories.value!!.map { it.categoryId }.sortedDescending()[0] + 1
+        val newOrder = categories.value!!.map { it.order }.sorted()[0] - 100
+
+        categoryCollection.document(newId.toString()).set(Category(newId, categoryName, newOrder))
+        return AddedCategory(newId, newOrder)
+    }
+
+//    fun getOrderForNewProduct(categoryId: Int): Int {
+//
+//    }
 
 }
 
