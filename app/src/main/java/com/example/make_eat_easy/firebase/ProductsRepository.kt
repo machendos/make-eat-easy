@@ -201,6 +201,28 @@ class ProductsRepository {
         return AddedCategory(newId, newOrder)
     }
 
+    fun incrementOrder(elements: MutableList<CategoryProduct>) {
+        db.runBatch { batch ->
+            elements.forEach {
+                if (it.isProduct) {
+                    batch.update(
+                        productCollection.document(it.productId.toString()),
+                        "order",
+                        it.order + 1
+                    )
+                } else {
+                    batch.update(
+                        categoryCollection.document(it.categoryId.toString()),
+                        "order",
+                        it.order + 1
+                    )
+                }
+            }
+
+
+        }
+    }
+
 //    fun getOrderForNewProduct(categoryId: Int): Int {
 //
 //    }
