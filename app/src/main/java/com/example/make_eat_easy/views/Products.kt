@@ -39,11 +39,18 @@ class Products : AppCompatActivity() {
 
             val dialogView = this.layoutInflater.inflate(R.layout.add_product_dialog, null)
 
-            dialogView.product_name.setAdapter(ArrayAdapter<String>(
+            dialogView.category_name.setAdapter(ArrayAdapter<String>(
                 this,
                 R.layout.element_autocomplete,
                 R.id.autocomplete_element,
                 viewModel.productRepository.categories.value!!.map { it.categoryName }
+            ))
+
+            dialogView.measure_name.setAdapter(ArrayAdapter<String>(
+                this,
+                R.layout.element_autocomplete,
+                R.id.autocomplete_element,
+                viewModel.productRepository.measures.value!!.map { it.measureName }
             ))
 
             AlertDialog.Builder(this)
