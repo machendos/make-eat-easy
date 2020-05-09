@@ -1,7 +1,7 @@
 package com.example.make_eat_easy.views
 
-import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,13 +39,16 @@ class Products : AppCompatActivity() {
 
             val dialogView = this.layoutInflater.inflate(R.layout.add_product_dialog, null)
 
-//            AddProductDialog().show(supportFragmentManager, "Nice")
+            dialogView.product_name.setAdapter(ArrayAdapter<String>(this, R.layout.element_autocomplete, R.id.autocomplete_element, arrayOf("ad", "asd", "asdf")))
+
             AlertDialog.Builder(this)
                 .setView(dialogView)
-                .setPositiveButton("asd", DialogInterface.OnClickListener { dialog, which ->
+                .setTitle("asdasdasd")
+                .setPositiveButton("Add") { _, _ ->
                     Toast.makeText(this, dialogView.product_name.text.toString(), Toast.LENGTH_LONG)
                         .show()
-                }).show()
+                }.setNegativeButton("Cancel") { _, _ -> }
+                .show()
         }
 
         val recyclerView = binding.productsList
