@@ -27,27 +27,6 @@ class ProductViewModel : ViewModel() {
             } as MutableList)
             productsCategoryList.value!!.sortBy { it.order }
 
-//            productRepository.products.value!!.forEach { product ->
-//
-//                var targetIndex = productsCategoryList.value!!.size
-//
-//                run loop@ {
-//                    productsCategoryList.value!!.forEachIndexed { index, element ->
-//
-//                        if (
-//                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
-//                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
-//                        ) {
-//                            targetIndex = index
-//                            return@loop
-//                        }
-//                    }
-//
-//                }
-//
-//                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
-//            }
-
             productsCategoryList.value = productsCategoryList.value
         }
 
@@ -62,36 +41,11 @@ class ProductViewModel : ViewModel() {
             } as MutableList)
             productsCategoryList.value!!.sortBy { it.order }
 
-//            productRepository.products.value!!.forEach { product ->
-//
-//                var targetIndex = productsCategoryList.value!!.size
-//
-//                run loop@ {
-//                    productsCategoryList.value!!.forEachIndexed { index, element ->
-//
-//                        if (
-//                            element.isProduct && element.order >= product.order && element.categoryId == product.categoryId ||
-//                            index > 0 && !element.isProduct && productsCategoryList.value!![index -1].categoryId == product.categoryId
-//                        ) {
-//                            targetIndex = index
-//                            return@loop
-//                        }
-//                    }
-//
-//                }
-
-//                productsCategoryList.value!!.add(targetIndex, CategoryProduct(product))
-//            }
-
             productsCategoryList.value = productsCategoryList.value
         }
     }
 
     fun addProduct(productName: String, measureName: String, categoryName: String) {
-
-//        var maxId = 0
-//        productRepository.products.value!!
-//            .forEach { if (it.productId >= maxId) maxId = it.productId + 1 }
 
         val measure =
             productRepository.measures.value!!.find { it.measureName == measureName }
@@ -133,7 +87,6 @@ class ProductViewModel : ViewModel() {
         }
 
 
-//        productRepository.add
     }
 
 }
