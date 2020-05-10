@@ -57,6 +57,14 @@ class Products : AppCompatActivity() {
                 .setView(dialogView)
                 .setTitle("Add new product")
                 .setPositiveButton("Add") { _, _ ->
+
+                    viewModel.addProduct(
+                        dialogView.product_name.text.toString(),
+                        dialogView.measure_name.text.toString(),
+                        dialogView.category_name.text.toString()
+                    )
+
+
                     Toast.makeText(this, dialogView.product_name.text.toString(), Toast.LENGTH_LONG)
                         .show()
                 }.setNegativeButton("Cancel") { _, _ -> }
