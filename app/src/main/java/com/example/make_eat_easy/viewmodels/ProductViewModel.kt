@@ -18,8 +18,13 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.addSource(productRepository.categories) { it ->
 
-            productsCategoryList.value = it.map { category -> CategoryProduct(category) } as MutableList
-            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product -> CategoryProduct(product) } as MutableList)
+            productsCategoryList.value =
+                it.map { category -> CategoryProduct(category) } as MutableList
+            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product ->
+                CategoryProduct(
+                    product
+                )
+            } as MutableList)
             productsCategoryList.value!!.sortBy { it.order }
 
 //            productRepository.products.value!!.forEach { product ->
@@ -48,8 +53,13 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.addSource(productRepository.products) {
 
-            productsCategoryList.value = productRepository.categories.value!!.map { category -> CategoryProduct(category) } as MutableList
-            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product -> CategoryProduct(product) } as MutableList)
+            productsCategoryList.value =
+                productRepository.categories.value!!.map { category -> CategoryProduct(category) } as MutableList
+            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product ->
+                CategoryProduct(
+                    product
+                )
+            } as MutableList)
             productsCategoryList.value!!.sortBy { it.order }
 
 //            productRepository.products.value!!.forEach { product ->
@@ -88,7 +98,8 @@ class ProductViewModel : ViewModel() {
         val measureId = measure?.measureId ?: productRepository.addMeasure(measureName)
 
         if (categoryName == "") {
-            val order = productsCategoryList.value!![productsCategoryList.value!!.lastIndex].order + 1
+            val order =
+                productsCategoryList.value!![productsCategoryList.value!!.lastIndex].order + 1
             productRepository.addProduct(productName, null, measureId, order)
             return
         }
@@ -103,17 +114,23 @@ class ProductViewModel : ViewModel() {
         } else {
             val elementsForIncrement = mutableListOf<CategoryProduct>()
             var currOrder = category.order + 1
-            productsCategoryList.value!!.forEach { if (it.order == currOrder) {
-                Log.d("asdasd->>index", it.productName)
-                currOrder = it.order + 1
-                elementsForIncrement.add(it)
-            } }
+            productsCategoryList.value!!.forEach {
+                if (it.order == currOrder) {
+                    Log.d("asdasd->>index", it.productName)
+                    currOrder = it.order + 1
+                    elementsForIncrement.add(it)
+                }
+            }
             productRepository.incrementOrder(elementsForIncrement)
-            productRepository.addProduct(productName, category.categoryId, measureId, category.order + 1)
+            productRepository.addProduct(
+                productName,
+                category.categoryId,
+                measureId,
+                category.order + 1
+            )
 
 
         }
-
 
 
 //        productRepository.add

@@ -47,8 +47,12 @@ class ProductsRepository {
 
                     DocumentChange.Type.ADDED -> {
                         var targetIndex = categories.value!!.indexOfFirst { it.order >= order }
-                        targetIndex = if(targetIndex == -1) categories.value!!.size else targetIndex
-                        categories.value!!.add(targetIndex, Category(categoryId, categoryName, order))
+                        targetIndex =
+                            if (targetIndex == -1) categories.value!!.size else targetIndex
+                        categories.value!!.add(
+                            targetIndex,
+                            Category(categoryId, categoryName, order)
+                        )
                     }
 
                     DocumentChange.Type.MODIFIED -> {
@@ -85,7 +89,14 @@ class ProductsRepository {
                 when (documentChange.type) {
 
                     DocumentChange.Type.ADDED ->
-                        measures.value!!.add(Measure(measureId, measureName, parentMeasureId, parentMeasureFactor))
+                        measures.value!!.add(
+                            Measure(
+                                measureId,
+                                measureName,
+                                parentMeasureId,
+                                parentMeasureFactor
+                            )
+                        )
 
                     DocumentChange.Type.MODIFIED -> {
                         val element = measures.value!!.find { it.measureId == measureId }
@@ -119,7 +130,15 @@ class ProductsRepository {
                 when (documentChange.type) {
 
                     DocumentChange.Type.ADDED ->
-                        products.value!!.add(Product(productId, productName, measureId, categoryId, order))
+                        products.value!!.add(
+                            Product(
+                                productId,
+                                productName,
+                                measureId,
+                                categoryId,
+                                order
+                            )
+                        )
 
                     DocumentChange.Type.MODIFIED -> {
                         val element = products.value!!.find { it.productId == productId }
@@ -166,17 +185,20 @@ class ProductsRepository {
                     batch.update(
                         productCollection.document(it.productId.toString()),
                         "order",
-                        it.order)
+                        it.order
+                    )
 
                     batch.update(
                         productCollection.document(it.productId.toString()),
                         "categoryId",
-                        it.categoryId)
+                        it.categoryId
+                    )
                 } else {
                     batch.update(
                         categoryCollection.document(it.categoryId.toString()),
                         "order",
-                        it.order)
+                        it.order
+                    )
                 }
 
 
