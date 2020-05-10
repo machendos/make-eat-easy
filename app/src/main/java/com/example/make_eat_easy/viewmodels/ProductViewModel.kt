@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.firebase.ProductsRepository
@@ -16,32 +15,33 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.value = mutableListOf()
 
-        productsCategoryList.addSource(productRepository.categories) { it ->
-
+        fun onChangeProductCategory() {
             productsCategoryList.value =
-                it.map { category -> CategoryProduct(category) } as MutableList
-            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product ->
-                CategoryProduct(
-                    product
-                )
-            } as MutableList)
-            productsCategoryList.value!!.sortBy { it.order }
+                productRepository
+                    .categories
+                    .value!!
+                    .map {
+                            category -> CategoryProduct(category)
+                    } as MutableList
 
+            val convertedProduct = productRepository
+                .products
+                .value!!
+                .map { product -> CategoryProduct(product) } as MutableList
+
+            productsCategoryList.value!!.addAll(convertedProduct)
+
+            productsCategoryList.value!!.sortBy { it.order }
             productsCategoryList.value = productsCategoryList.value
+
+        }
+
+        productsCategoryList.addSource(productRepository.categories) {
+            onChangeProductCategory()
         }
 
         productsCategoryList.addSource(productRepository.products) {
-
-            productsCategoryList.value =
-                productRepository.categories.value!!.map { category -> CategoryProduct(category) } as MutableList
-            productsCategoryList.value!!.addAll(productRepository.products.value!!.map { product ->
-                CategoryProduct(
-                    product
-                )
-            } as MutableList)
-            productsCategoryList.value!!.sortBy { it.order }
-
-            productsCategoryList.value = productsCategoryList.value
+            onChangeProductCategory()
         }
     }
 
@@ -70,7 +70,6 @@ class ProductViewModel : ViewModel() {
             var currOrder = category.order + 1
             productsCategoryList.value!!.forEach {
                 if (it.order == currOrder) {
-                    Log.d("asdasd->>index", it.productName)
                     currOrder = it.order + 1
                     elementsForIncrement.add(it)
                 }
