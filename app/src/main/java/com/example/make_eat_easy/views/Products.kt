@@ -1,6 +1,7 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.ProductsAdapter
+import com.example.make_eat_easy.databinding.AddCategoryDialogBinding
 import com.example.make_eat_easy.databinding.ProductsBinding
 import com.example.make_eat_easy.viewmodels.ProductViewModel
 import kotlinx.android.synthetic.main.add_product_dialog.view.*
@@ -67,6 +69,24 @@ class Products : AppCompatActivity() {
 
                     Toast.makeText(this, dialogView.product_name.text.toString(), Toast.LENGTH_LONG)
                         .show()
+                }.setNegativeButton("Cancel") { _, _ -> }
+                .show()
+        }
+
+        binding.goToAddCategory.setOnClickListener {
+
+            val bindingDialog: AddCategoryDialogBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(this),
+                R.layout.add_category_dialog, null, false
+            )
+
+            AlertDialog.Builder(this)
+                .setView(bindingDialog.root)
+                .setTitle("Add new category")
+                .setPositiveButton("Add") { _, _ ->
+
+                        viewModel.addCategory(bindingDialog.addCategoryName.text.toString())
+
                 }.setNegativeButton("Cancel") { _, _ -> }
                 .show()
         }
