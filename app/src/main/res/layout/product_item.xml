@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
+<!--    TODO: delete category from product in view-->
     <TextView
         android:id="@+id/category_name"
         android:layout_width="match_parent"
