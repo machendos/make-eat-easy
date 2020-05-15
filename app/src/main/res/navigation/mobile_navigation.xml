@@ -14,11 +14,19 @@
         <action
             android:id="@+id/action_nav_home_to_products"
             app:destination="@id/products" />
+        <action
+            android:id="@+id/action_nav_home_to_dishes"
+            app:destination="@id/dishes" />
     </fragment>
 
     <activity
         android:id="@+id/products"
         android:name="com.example.make_eat_easy.views.Products"
         android:label="Products" />
+    <fragment
+        android:id="@+id/dishes"
+        android:name="com.example.make_eat_easy.views.Dishes"
+        android:label="dishes_fragment"
+        tools:layout="@layout/dishes_fragment" />
 
 </navigation>
