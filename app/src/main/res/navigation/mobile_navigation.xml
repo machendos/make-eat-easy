@@ -7,31 +7,18 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.make_eat_easy.ui.home.HomeFragment"
+        android:name="com.example.make_eat_easy.util.HomeNavigationFragment"
+        android:label="sdf"
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:label="@string/home_second"
-        >
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
+            android:id="@+id/action_nav_home_to_products"
+            app:destination="@id/products" />
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        />
+    <activity
+        android:id="@+id/products"
+        android:name="com.example.make_eat_easy.views.Products"
+        android:label="Products" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        />
 </navigation>
