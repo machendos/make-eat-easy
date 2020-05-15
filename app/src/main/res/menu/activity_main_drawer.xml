@@ -21,8 +21,9 @@
             android:icon="@drawable/ic_dishes"
             android:title="@string/dishes_navigation" />
         <item
-            android:id="@+id/foodstuffs_navigation"
+            android:id="@+id/products"
             android:icon="@drawable/ic_products"
             android:title="@string/foodstuffs_navigation" />
     </group>
 </menu>
+

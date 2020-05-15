@@ -1,4 +1,4 @@
-package com.example.make_eat_easy.ui.home
+package com.example.make_eat_easy.util
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.make_eat_easy.R
 
 
-class HomeFragment : Fragment() {
-
+class HomeNavigationFragment : Fragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -17,6 +16,6 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
-       
+
     }
 }

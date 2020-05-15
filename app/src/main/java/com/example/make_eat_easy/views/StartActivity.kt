@@ -5,11 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.make_eat_easy.MainActivity
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.databinding.StartActivityBinding
 import com.example.make_eat_easy.viewmodels.StartViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
 
 
 
@@ -30,7 +29,7 @@ class StartActivity: AppCompatActivity() {
         if (viewModel.alreadyLoggedIn) {
 
 //            TODO: change to the main activity
-            startActivity(Intent(this, Products::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 

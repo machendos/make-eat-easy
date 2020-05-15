@@ -250,7 +250,7 @@ class ProductsRepository {
     }
 
     fun unremoveProduct(product: Product) {
-        productCollection.add(product)
+        productCollection.document(product.productId.toString()).set(product)
     }
 
 //    fun getOrderForNewProduct(categoryId: Int): Int {
