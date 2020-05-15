@@ -12,8 +12,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 
 
-private val db = FirebaseFirestore.getInstance()
-
 
 class StartActivity: AppCompatActivity() {
 
@@ -30,10 +28,6 @@ class StartActivity: AppCompatActivity() {
         viewModel = ViewModelProvider(this)[StartViewModel::class.java]
 
         if (viewModel.alreadyLoggedIn) {
-
-            db.firestoreSettings = FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build()
 
 //            TODO: change to the main activity
             startActivity(Intent(this, Products::class.java))
