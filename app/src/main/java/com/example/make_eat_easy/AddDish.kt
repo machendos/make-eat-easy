@@ -1,6 +1,7 @@
 package com.example.make_eat_easy
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class AddDish : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val adapter = NecessaryProductsAdapter()
+        val adapter = NecessaryProductsAdapter(requireContext())
 
         val linearLayoutManager = LinearLayoutManager(activity);
 //        linearLayoutManager.stackFromEnd = true
@@ -51,6 +52,13 @@ class AddDish : Fragment() {
             adapter.itemsCount++
             recyclerView!!.scrollToPosition(adapter.itemsCount - 1)
             adapter.notifyDataSetChanged()
+        }
+
+        binding.readyAddDishButton.setOnClickListener {
+            Log.d("asd", adapter.necessaryProducts.map {
+                it.productName.text.toString()
+            }.toString() )
+
         }
 
     }
