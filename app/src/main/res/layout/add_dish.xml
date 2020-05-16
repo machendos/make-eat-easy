@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
-        android:hint="Dish name"
-        android:id="@+id/dish_name"
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-<androidx.appcompat.widget.AppCompatAutoCompleteTextView
-    android:hint="Category"
-    android:id="@+id/category_name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+        <EditText
+            android:hint="Dish name"
+            android:id="@+id/dish_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-<!--    Time picker-->
-    <EditText
-        android:hint="Necessary time"
-        android:id="@+id/time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:hint="Category"
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/necessary_products"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <!--    Time picker-->
+        <EditText
+            android:hint="Necessary time"
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/necessary_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
