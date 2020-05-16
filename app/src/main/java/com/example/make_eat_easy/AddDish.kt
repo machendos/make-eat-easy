@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,10 +38,21 @@ class AddDish : Fragment() {
 
         val adapter = NecessaryProductsAdapter()
 
+        val linearLayoutManager = LinearLayoutManager(activity);
+//        linearLayoutManager.stackFromEnd = true
+
         val recyclerView = activity?.findViewById<RecyclerView>(R.id.necessary_products)
         recyclerView?.setHasFixedSize(true)
-        recyclerView?.layoutManager = LinearLayoutManager(context)
+
+        recyclerView?.layoutManager = linearLayoutManager
         recyclerView?.adapter = adapter
+
+        activity?.findViewById<Button>(R.id.add_necessary_product_button)?.setOnClickListener {
+            adapter.itemsCount++
+            recyclerView!!.scrollToPosition(adapter.itemsCount - 1)
+            adapter.notifyDataSetChanged()
+        }
+
     }
 
 }
