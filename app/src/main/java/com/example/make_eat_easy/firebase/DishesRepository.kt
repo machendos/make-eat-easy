@@ -85,4 +85,27 @@ class DishesRepository {
 
     }
 
+    fun addDish(
+        dishName: String,
+        categoryId: Int,
+        cookDuration: Int,
+        products: MutableMap<Int, Double>,
+        order: Int
+    ) {
+
+        var maxId = 0
+        dishes.value!!.forEach { if (it.dishId >= maxId) maxId = it.dishId + 1 }
+
+        dishCollection.document(maxId.toString())
+            .set(Dish(maxId, dishName, categoryId, cookDuration, products, order))
+
+    }
+
+    fun addCategory(categoryName: String) {
+        val newId = categories.value!!.map { it.categoryId }.sortedDescending()[0] + 1
+        val newOrder = categories.value!!.map { it.order }.sorted()[0] - 100
+        categoryCollection.document(newId.toString())
+            .set(Category(newId, categoryName, newOrder))
+    }
+
 }
