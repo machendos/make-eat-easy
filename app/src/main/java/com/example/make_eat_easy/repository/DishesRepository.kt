@@ -1,27 +1,17 @@
-package com.example.make_eat_easy.firebase
+package com.example.make_eat_easy.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.Dish
 import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
 
 class DishesRepository {
 
     var dishes: MutableLiveData<MutableList<Dish>> = MutableLiveData(mutableListOf())
     var categories: MutableLiveData<MutableList<Category>> = MutableLiveData(mutableListOf())
 
-    private val db = FirebaseFirestore.getInstance()
-
-    private val dishCollection = db
-        .collection("userData")
-        .document(Authenticator().getEmail())
-        .collection("dish")
-
-    private val categoryCollection = db
-        .collection("userData")
-        .document(Authenticator().getEmail())
-        .collection("dishCategory")
+    private val dishCollection = DB.dishCollection
+    private val categoryCollection = DB.dishCategoryCollection
 
     init {
         categoryCollection.addSnapshotListener { snapshot, _ ->

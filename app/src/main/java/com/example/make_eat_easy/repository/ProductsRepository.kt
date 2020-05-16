@@ -1,4 +1,4 @@
-package com.example.make_eat_easy.firebase
+package com.example.make_eat_easy.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.make_eat_easy.models.Category
@@ -6,7 +6,6 @@ import com.example.make_eat_easy.models.CategoryProduct
 import com.example.make_eat_easy.models.Measure
 import com.example.make_eat_easy.models.Product
 import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
 
 data class AddedCategory(val categoryId: Int, val categoryOrder: Int)
 
@@ -16,22 +15,9 @@ class ProductsRepository {
     var measures: MutableLiveData<MutableList<Measure>> = MutableLiveData(mutableListOf())
     var categories: MutableLiveData<MutableList<Category>> = MutableLiveData(mutableListOf())
 
-    private val db = FirebaseFirestore.getInstance()
-
-    private val productCollection = db
-        .collection("userData")
-        .document(Authenticator().getEmail())
-        .collection("product")
-
-    private val measureCollection = db
-        .collection("userData")
-        .document(Authenticator().getEmail())
-        .collection("measure")
-
-    private val categoryCollection = db
-        .collection("userData")
-        .document(Authenticator().getEmail())
-        .collection("category")
+    private val productCollection = DB.productCollection
+    private val measureCollection = DB.measureCollection
+    private val categoryCollection = DB.productCategoryCollection
 
     init {
 
@@ -180,7 +166,8 @@ class ProductsRepository {
     }
 
     fun updateProductOrders(productsCategories: MutableList<CategoryProduct>) {
-        db.runBatch { batch ->
+
+        DB.runBatch { batch ->
             productsCategories.forEach {
 
                 if (it.isProduct) {
@@ -226,7 +213,7 @@ class ProductsRepository {
     }
 
     fun incrementOrder(elements: MutableList<CategoryProduct>) {
-        db.runBatch { batch ->
+        DB.runBatch { batch ->
             elements.forEach {
                 if (it.isProduct) {
                     batch.update(
