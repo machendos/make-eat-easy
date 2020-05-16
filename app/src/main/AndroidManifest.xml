@@ -28,7 +28,8 @@
             android:parentActivityName=".views.StartActivity"/>
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".views.Products" />
+        <activity android:name=".views.Products"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 
