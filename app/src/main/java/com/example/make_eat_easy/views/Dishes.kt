@@ -1,15 +1,17 @@
 package com.example.make_eat_easy.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.make_eat_easy.R
+import com.example.make_eat_easy.adapters.DishesAdapter
 import com.example.make_eat_easy.databinding.DishesFragmentBinding
 import com.example.make_eat_easy.firebase.DishesRepository
 import com.example.make_eat_easy.viewmodels.DishesViewModel
@@ -39,12 +41,24 @@ class Dishes : Fragment() {
         return view
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val dishesAdapter = DishesAdapter(viewModel)
+
         viewModel.dishesCategoryList.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            dishesAdapter.notifyDataSetChanged()
         }
+
+        dishesAdapter.setDishClickListener {
+            Log.d("asdasd->click", it.toString())
+        }
+
+        val recyclerView = binding.dishesView
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = dishesAdapter
 
 
         // TODO: Use the ViewModel
