@@ -27,6 +27,14 @@
         android:id="@+id/dishes"
         android:name="com.example.make_eat_easy.views.Dishes"
         android:label="dishes_fragment"
-        tools:layout="@layout/dishes_fragment" />
+        tools:layout="@layout/dishes_fragment" >
+        <action
+            android:id="@+id/action_dishes_to_addDish"
+            app:destination="@id/addDish" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDish"
+        android:name="com.example.make_eat_easy.AddDish"
+        android:label="AddDish" />
 
 </navigation>
