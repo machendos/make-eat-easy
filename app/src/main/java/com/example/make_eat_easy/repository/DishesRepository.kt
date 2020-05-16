@@ -87,7 +87,7 @@ class DishesRepository {
 
     fun addDish(
         dishName: String,
-        categoryId: Int,
+        categoryId: Int?,
         cookDuration: Int,
         products: MutableMap<Int, Double>,
         order: Int
@@ -101,11 +101,14 @@ class DishesRepository {
 
     }
 
-    fun addCategory(categoryName: String) {
+    fun addCategory(categoryName: String): AddedCategory {
+
         val newId = categories.value!!.map { it.categoryId }.sortedDescending()[0] + 1
         val newOrder = categories.value!!.map { it.order }.sorted()[0] - 100
         categoryCollection.document(newId.toString())
             .set(Category(newId, categoryName, newOrder))
+
+        return AddedCategory(newId, newOrder)
     }
 
 }

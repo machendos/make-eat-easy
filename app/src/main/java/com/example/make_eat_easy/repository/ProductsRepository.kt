@@ -162,13 +162,15 @@ class ProductsRepository {
 
     }
 
-    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int) {
+    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int): Int {
 
         var maxId = 0
         products.value!!
             .forEach { if (it.productId >= maxId) maxId = it.productId + 1 }
         productCollection.document(maxId.toString())
             .set(Product(maxId, productName, measureId, categoryId, order))
+
+        return maxId
     }
 
     fun deleteProduct(productId: Int) {
