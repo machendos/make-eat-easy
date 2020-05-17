@@ -19,14 +19,16 @@ import com.example.make_eat_easy.viewmodels.DishesViewModel
 class AddDish : Fragment() {
 
     private lateinit var viewModel: DishesViewModel
-    private  lateinit var binding: AddDishBinding
+    private lateinit var binding: AddDishBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate<AddDishBinding>(inflater, R.layout.add_dish, container, false)
+        binding =
+            DataBindingUtil.inflate<AddDishBinding>(inflater, R.layout.add_dish, container, false)
         val view = binding.root
 
         viewModel = ViewModelProvider(this).get(DishesViewModel::class.java)
@@ -55,9 +57,17 @@ class AddDish : Fragment() {
         }
 
         binding.readyAddDishButton.setOnClickListener {
-            Log.d("asd", adapter.necessaryProducts.map {
-                it.productName.text.toString()
-            }.toString() )
+            val necessaryProducts = adapter.necessaryProducts.map {
+                it.productName.text.toString() to it.productCount.text.toString()
+            }.toMap()
+
+            val dishName = binding.dishName.text.toString()
+            val categoryName = binding.categoryName.text.toString()
+            val duration = binding.time.text.toString()
+
+            viewModel.addDish(dishName, categoryName, duration, necessaryProducts)
+
+            Log.d("asdNEC", necessaryProducts.toString())
 
         }
 
