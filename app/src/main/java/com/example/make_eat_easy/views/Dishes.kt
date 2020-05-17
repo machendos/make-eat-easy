@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.DishesAdapter
 import com.example.make_eat_easy.databinding.DishesFragmentBinding
-import com.example.make_eat_easy.firebase.DishesRepository
+import com.example.make_eat_easy.repository.DishesRepository
 import com.example.make_eat_easy.viewmodels.DishesViewModel
 
 

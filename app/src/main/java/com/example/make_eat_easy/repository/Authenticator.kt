@@ -1,4 +1,4 @@
-package com.example.make_eat_easy.firebase
+package com.example.make_eat_easy.repository
 
 import com.google.firebase.auth.FirebaseAuth
 

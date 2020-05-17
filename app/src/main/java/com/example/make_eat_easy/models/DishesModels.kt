@@ -50,3 +50,8 @@ class CategoryDish() {
         order = dish.order
     }
 }
+
+class NecessaryProduct(
+    val productName: String,
+    val count: Double
+)

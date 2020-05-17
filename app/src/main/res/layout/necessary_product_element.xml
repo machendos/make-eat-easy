@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         />
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+    <EditText
         android:layout_weight="2"
         android:id="@+id/necessary_product_name"
         android:hint="Product name"
