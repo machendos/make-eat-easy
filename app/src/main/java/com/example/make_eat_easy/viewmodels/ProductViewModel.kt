@@ -2,10 +2,10 @@ package com.example.make_eat_easy.viewmodels
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.example.make_eat_easy.firebase.ProductsRepository
 import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.CategoryProduct
 import com.example.make_eat_easy.models.Product
+import com.example.make_eat_easy.repository.ProductsRepository
 
 class ProductViewModel : ViewModel() {
 

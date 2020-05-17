@@ -1,7 +1,7 @@
 package com.example.make_eat_easy.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.example.make_eat_easy.firebase.Authenticator
+import com.example.make_eat_easy.repository.Authenticator
 import com.example.make_eat_easy.util.SingleLiveEvent
 
 class SignInViewModel : ViewModel() {

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
-import com.example.make_eat_easy.firebase.Authenticator
+import com.example.make_eat_easy.repository.Authenticator
 import com.example.make_eat_easy.viewmodels.ProductViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
