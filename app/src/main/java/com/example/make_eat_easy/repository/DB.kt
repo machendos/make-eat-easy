@@ -14,11 +14,11 @@ object DB {
         .collection("userData")
         .document(email)
 
-    val productCollection = db.collection("product")
-    val measureCollection = db.collection("measure")
-    val productCategoryCollection = db.collection("category")
-    val dishCollection = db.collection("dish")
-    val dishCategoryCollection = db.collection("dishCategory")
+    val productCollection = userDocument.collection("product")
+    val measureCollection = userDocument.collection("measure")
+    val productCategoryCollection = userDocument.collection("category")
+    val dishCollection = userDocument.collection("dish")
+    val dishCategoryCollection = userDocument.collection("dishCategory")
 
     fun create(email: String) {
         val measureCategory = FirebaseFirestore
