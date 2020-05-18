@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.DishesAdapter
 import com.example.make_eat_easy.databinding.DishesFragmentBinding
 import com.example.make_eat_easy.dialogues.AddDishCategoryDialog
+import com.example.make_eat_easy.util.DishTouchHelper
 import com.example.make_eat_easy.viewmodels.DishesViewModel
 
 
@@ -62,6 +64,12 @@ class Dishes : Fragment() {
         binding.goToAddDish.setOnClickListener { navController.navigate(R.id.addDish) }
 
         binding.goToAddCategory.setOnClickListener { AddDishCategoryDialog(requireContext(), viewModel).show() }
+
+        ItemTouchHelper(
+            DishTouchHelper(
+                viewModel, dishesAdapter, binding.dishesView
+            )
+        ).attachToRecyclerView(recyclerView)
 
     }
 
