@@ -122,4 +122,40 @@ object DishesRepository {
         }
     }
 
+    fun deleteDish(dishId: Int) = dishCollection
+        .document(dishId.toString())
+        .delete()
+
+    fun unremoveDish(dish: Dish) {
+        dishCollection.document(dish.dishId.toString()).set(dish)
+    }
+
+    fun updateDishOrders(dishesCategories: MutableList<CategoryDish>) {
+
+        DB.runBatch { batch ->
+            dishesCategories.forEach {
+
+                if (it.isDish) {
+                    batch.update(
+                        dishCollection.document(it.dishId.toString()),
+                        "order",
+                        it.order
+                    )
+
+                    batch.update(
+                        dishCollection.document(it.dishId.toString()),
+                        "categoryId",
+                        it.categoryId
+                    )
+                } else {
+                    batch.update(
+                        categoryCollection.document(it.categoryId.toString()),
+                        "order",
+                        it.order
+                    )
+                }
+            }
+        }
+    }
+
 }

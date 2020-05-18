@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.models.CategoryDish
+import com.example.make_eat_easy.models.Dish
 import com.example.make_eat_easy.repository.DishesRepository
 import com.example.make_eat_easy.repository.ProductsRepository
 
@@ -11,6 +12,8 @@ class DishesViewModel : ViewModel() {
 
     val dishesRepository = DishesRepository
     val productRepository = ProductsRepository
+
+    lateinit var cashedDish: Dish
 
     val dishesCategoryList = MediatorLiveData<MutableList<CategoryDish>>()
 
@@ -109,6 +112,13 @@ class DishesViewModel : ViewModel() {
             )
         }
     }
+
+    fun deleteDish(dishId: Int) {
+        cashedDish = dishesRepository.dishes.value!!.find { it.dishId == dishId }!!
+        dishesRepository.deleteDish(dishId)
+    }
+
+    fun unremoveDish() = dishesRepository.unremoveDish(cashedDish)
 
     fun addCategory(categoryName: String) = dishesRepository.addCategory(categoryName)
 }
