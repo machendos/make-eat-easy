@@ -24,6 +24,7 @@ class ProductsRepository {
         categoryCollection.addSnapshotListener { snapshot, _ ->
 
             snapshot!!.documentChanges.forEach { documentChange ->
+
                 val document = documentChange.document
                 val categoryId = (document.get("categoryId") as Long).toInt()
                 val categoryName = document.get("categoryName") as String
@@ -31,31 +32,20 @@ class ProductsRepository {
 
                 when (documentChange.type) {
 
-                    DocumentChange.Type.ADDED -> {
-                        var targetIndex = categories.value!!.indexOfFirst { it.order >= order }
-                        targetIndex =
-                            if (targetIndex == -1) categories.value!!.size else targetIndex
-                        categories.value!!.add(
-                            targetIndex,
-                            Category(categoryId, categoryName, order)
-                        )
-                    }
+                    DocumentChange.Type.ADDED ->
+                        categories.value!!.add(Category(categoryId, categoryName, order))
 
                     DocumentChange.Type.MODIFIED -> {
                         val element = categories.value!!.find { it.categoryId == categoryId }
                         element?.categoryId = categoryId
                         element?.categoryName = categoryName
                         element?.order = order
-
-//                        TODO:!!!!!!
-                        categories.value!!.sortBy { it.order }
                     }
 
                     DocumentChange.Type.REMOVED -> {
                         val index = categories.value!!.indexOfFirst { it.categoryId == categoryId }
                         categories.value!!.removeAt(index)
                     }
-
 
                 }
                 categories.postValue(categories.value)
@@ -66,6 +56,7 @@ class ProductsRepository {
         measureCollection.addSnapshotListener { snapshot, _ ->
 
             snapshot!!.documentChanges.forEach { documentChange ->
+
                 val document = documentChange.document
                 val measureId = (document.get("measureId") as Long).toInt()
                 val measureName = document.get("measureName") as String
@@ -106,6 +97,7 @@ class ProductsRepository {
         productCollection.addSnapshotListener { snapshot, _ ->
 
             snapshot!!.documentChanges.forEach { documentChange ->
+
                 val document = documentChange.document
                 val productId = (document.get("productId") as Long).toInt()
                 val productName = document.get("productName") as String
@@ -138,14 +130,10 @@ class ProductsRepository {
                         val index = products.value!!.indexOfFirst { it.productId == productId }
                         products.value!!.removeAt(index)
                     }
-
                 }
                 products.postValue(products.value)
             }
-
         }
-
-
     }
 
     fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int): Int {
@@ -159,10 +147,18 @@ class ProductsRepository {
         return maxId
     }
 
+    fun updateProduct(productId: Int, productName: String) {
+        productCollection.document(productId.toString()).update("productName", productName)
+    }
+
     fun deleteProduct(productId: Int) {
         productCollection
             .document(productId.toString())
             .delete()
+    }
+
+    fun unremoveProduct(product: Product) {
+        productCollection.document(product.productId.toString()).set(product)
     }
 
     fun updateProductOrders(productsCategories: MutableList<CategoryProduct>) {
@@ -189,11 +185,7 @@ class ProductsRepository {
                         it.order
                     )
                 }
-
-
             }
-
-
         }
     }
 
@@ -229,22 +221,6 @@ class ProductsRepository {
                     )
                 }
             }
-
-
         }
     }
-
-    fun updateProduct(productId: Int, productName: String) {
-        productCollection.document(productId.toString()).update("productName", productName)
-    }
-
-    fun unremoveProduct(product: Product) {
-        productCollection.document(product.productId.toString()).set(product)
-    }
-
-//    fun getOrderForNewProduct(categoryId: Int): Int {
-//
-//    }
-
 }
-
