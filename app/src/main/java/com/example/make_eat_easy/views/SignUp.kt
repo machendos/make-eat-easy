@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import com.example.make_eat_easy.MainActivity
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.databinding.SignupActivityBinding
 import com.example.make_eat_easy.viewmodels.SignUpViewModel

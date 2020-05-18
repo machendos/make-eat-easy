@@ -1,4 +1,4 @@
-package com.example.make_eat_easy
+package com.example.make_eat_easy.views
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.NecessaryProductsAdapter
 import com.example.make_eat_easy.databinding.AddDishBinding
 import com.example.make_eat_easy.viewmodels.DishesViewModel
@@ -28,7 +29,8 @@ class AddDish : Fragment() {
     ): View? {
 
         binding =
-            DataBindingUtil.inflate<AddDishBinding>(inflater, R.layout.add_dish, container, false)
+            DataBindingUtil.inflate<AddDishBinding>(inflater,
+                R.layout.add_dish, container, false)
         val view = binding.root
 
         return view

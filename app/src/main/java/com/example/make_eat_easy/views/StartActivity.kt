@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.make_eat_easy.MainActivity
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.databinding.StartActivityBinding
 import com.example.make_eat_easy.viewmodels.StartViewModel

@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/addDish"
-        android:name="com.example.make_eat_easy.AddDish"
+        android:name="com.example.make_eat_easy.views.AddDish"
         android:label="AddDish" />
 
 </navigation>

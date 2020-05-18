@@ -26,10 +26,10 @@
         <activity
             android:name=".views.SignUp"
             android:parentActivityName=".views.StartActivity"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".views.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".views.Products"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".views.MainActivity"/>
     </application>
 
 
