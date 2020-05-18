@@ -106,12 +106,9 @@ class DishesViewModel : ViewModel() {
                 duration,
                 filtredProducts,
                 category.order + 1
-
             )
-
         }
-
-
     }
 
+    fun addCategory(categoryName: String) = dishesRepository.addCategory(categoryName)
 }
