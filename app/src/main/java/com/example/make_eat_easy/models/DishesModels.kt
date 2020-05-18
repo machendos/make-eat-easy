@@ -5,7 +5,7 @@ class Dish(
     var dishName: String = "",
     var categoryId: Int? = 0,
     var cookDuration: Int = 0,
-    var products: MutableMap<Int, Double> = mutableMapOf<Int, Double>(),
+    var products: MutableMap<String, Double> = mutableMapOf<String, Double>(),
     var order: Int = 0
 )
 
@@ -15,7 +15,7 @@ class CategoryDish() {
     var dishId: Int = 0
     var dishName: String = ""
     var cookDuration: Int = 0
-    var products: MutableMap<Int, Double> = mutableMapOf<Int, Double>()
+    var products: MutableMap<String, Double> = mutableMapOf<String, Double>()
 
     var categoryName: String = ""
 

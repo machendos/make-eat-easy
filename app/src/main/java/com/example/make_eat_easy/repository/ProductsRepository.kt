@@ -9,7 +9,7 @@ import com.google.firebase.firestore.DocumentChange
 
 data class AddedCategory(val categoryId: Int, val categoryOrder: Int)
 
-class ProductsRepository {
+object ProductsRepository {
 
     var products: MutableLiveData<MutableList<Product>> = MutableLiveData(mutableListOf())
     var measures: MutableLiveData<MutableList<Measure>> = MutableLiveData(mutableListOf())
@@ -136,13 +136,20 @@ class ProductsRepository {
         }
     }
 
-    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int): Int {
+    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int?): Int {
+
+        var maxOrder = 0
+        if (order == null) {
+            maxOrder = 0
+            products.value!!.forEach { if (it.order >= maxOrder) maxOrder = it.order + 1 }
+            categories.value!!.forEach { if (it.order >= maxOrder) maxOrder = it.order + 1 }
+        } else maxOrder = order
 
         var maxId = 0
         products.value!!
             .forEach { if (it.productId >= maxId) maxId = it.productId + 1 }
         productCollection.document(maxId.toString())
-            .set(Product(maxId, productName, measureId, categoryId, order))
+            .set(Product(maxId, productName, measureId, categoryId, maxOrder))
 
         return maxId
     }

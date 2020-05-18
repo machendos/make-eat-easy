@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.DishesAdapter
 import com.example.make_eat_easy.databinding.DishesFragmentBinding
-import com.example.make_eat_easy.repository.DishesRepository
 import com.example.make_eat_easy.viewmodels.DishesViewModel
 
 
@@ -31,8 +30,6 @@ class Dishes : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        TODO: to start activity
-        DishesRepository()
 
         binding = DataBindingUtil.inflate<DishesFragmentBinding>(inflater, R.layout.dishes_fragment, container, false)
         val view = binding.root

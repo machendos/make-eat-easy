@@ -9,7 +9,7 @@ import com.example.make_eat_easy.repository.ProductsRepository
 
 class ProductViewModel : ViewModel() {
 
-    val productRepository = ProductsRepository()
+    val productRepository = ProductsRepository
 
     val productsCategoryList = MediatorLiveData<MutableList<CategoryProduct>>()
 
@@ -87,11 +87,7 @@ class ProductViewModel : ViewModel() {
                 measureId,
                 category.order + 1
             )
-
-
         }
-
-
     }
 
     fun deleteProduct(productId: Int) {
@@ -114,15 +110,5 @@ class ProductViewModel : ViewModel() {
     }
 
     fun addCategory(categoryName: String) = productRepository.addCategory((categoryName))
-
-    fun deleteCategory(categoryId: Int) {}
-
-    fun deleteCategoryWithProducts(categoryId: Int) {
-
-    }
-
-    fun updateCategory(categoryId: Int, newCategoryName: String) {}
-
-    fun addMeasure(measureName: String) {}
 
 }
