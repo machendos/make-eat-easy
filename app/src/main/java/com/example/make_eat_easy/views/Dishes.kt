@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +23,7 @@ class Dishes : Fragment() {
         fun newInstance() = Dishes()
     }
 
-    private lateinit var viewModel: DishesViewModel
+    private val viewModel: DishesViewModel by activityViewModels()
     private  lateinit var binding: DishesFragmentBinding
 
     override fun onCreateView(
@@ -33,8 +33,6 @@ class Dishes : Fragment() {
 
         binding = DataBindingUtil.inflate<DishesFragmentBinding>(inflater, R.layout.dishes_fragment, container, false)
         val view = binding.root
-
-        viewModel = ViewModelProvider(this).get(DishesViewModel::class.java)
 
         return view
     }

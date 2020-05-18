@@ -16,10 +16,6 @@ class DishesViewModel : ViewModel() {
 
     init {
 
-        dishesCategoryList.value =
-            dishesRepository.categories.value!!.map { CategoryDish(it) }.toMutableList()
-        dishesRepository.dishes.value!!.forEach { dishesCategoryList.value!!.add(CategoryDish(it)) }
-
         fun onChangeDishCategory() {
             dishesCategoryList.value =
                 dishesRepository.categories.value!!.map { category ->

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.adapters.NecessaryProductsAdapter
@@ -18,7 +18,7 @@ import com.example.make_eat_easy.viewmodels.DishesViewModel
 
 class AddDish : Fragment() {
 
-    private lateinit var viewModel: DishesViewModel
+    private val viewModel: DishesViewModel by activityViewModels()
     private lateinit var binding: AddDishBinding
 
 
@@ -30,8 +30,6 @@ class AddDish : Fragment() {
         binding =
             DataBindingUtil.inflate<AddDishBinding>(inflater, R.layout.add_dish, container, false)
         val view = binding.root
-
-        viewModel = ViewModelProvider(this).get(DishesViewModel::class.java)
 
         return view
     }
