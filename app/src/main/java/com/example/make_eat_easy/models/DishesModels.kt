@@ -1,21 +1,13 @@
 package com.example.make_eat_easy.models
 
 class Dish(
-    dishId: Int = 0,
-    dishName: String = "",
-    categoryId: Int? = 0,
-    cookDuration: Int = 0,
-    products: MutableMap<Int, Double> = mutableMapOf<Int, Double>(),
-    order: Int = 0
-) {
-    var dishId = dishId
-    var dishName = dishName
-    var categoryId = categoryId
-    val cookDuration = cookDuration
-    var products = products
-    var order = order
-}
-
+    var dishId: Int = 0,
+    var dishName: String = "",
+    var categoryId: Int? = 0,
+    var cookDuration: Int = 0,
+    var products: MutableMap<Int, Double> = mutableMapOf<Int, Double>(),
+    var order: Int = 0
+)
 
 class CategoryDish() {
     var isDish: Boolean = true

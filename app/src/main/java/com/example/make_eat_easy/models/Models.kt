@@ -1,54 +1,25 @@
 package com.example.make_eat_easy.models
 
 class Product(
-    productId: Int = 0,
-    productName: String = "",
-    measureId: Int = 0,
-    categoryId: Int? = 0,
-    order: Int = 0
-) {
-    val productId = productId
-    var productName = productName
-    var measureId = measureId
-    var categoryId = categoryId
-    var order = order
-    override fun toString(): String {
-        return "Product(productId=$productId, productName='$productName', measureId=$measureId, categoryId=$categoryId, order=$order)"
-    }
-}
+    var productId: Int = 0,
+    var productName: String = "",
+    var measureId: Int = 0,
+    var categoryId: Int? = 0,
+    var order: Int = 0
+)
 
 class Measure(
-    measureId: Int = 0,
-    measureName: String = "",
-    parentMeasureId: Int? = 0,
-    parentMeasureFactor: Double = 0.0
-) {
-    var measureId = measureId
-    var measureName = measureName
-    var parentMeasureId = parentMeasureId
-    var parentMeasureFactor = parentMeasureFactor
-    override fun toString(): String {
-        return "Measure(measureId=$measureId, measureName='$measureName', parentMeasureId=$parentMeasureId, parentMeasureFactor=$parentMeasureFactor)"
-    }
-}
+    var measureId: Int = 0,
+    var measureName: String = "",
+    var parentMeasureId: Int? = 0,
+    var parentMeasureFactor: Double = 0.0
+)
 
 class Category(
-    categoryId: Int = 0,
-    categoryName: String = "",
-    order: Int = 0
-
-) {
-
-    var categoryId = categoryId
-
-    var categoryName = categoryName
-
-    var order = order
-    override fun toString(): String {
-        return "Category(categoryId=$categoryId, categoryName='$categoryName', order=$order)"
-    }
-
-}
+    var categoryId: Int = 0,
+    var categoryName: String = "",
+    var order: Int = 0
+)
 
 class CategoryProduct() {
 
