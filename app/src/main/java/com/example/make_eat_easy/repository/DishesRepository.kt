@@ -2,10 +2,11 @@ package com.example.make_eat_easy.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.make_eat_easy.models.Category
+import com.example.make_eat_easy.models.CategoryDish
 import com.example.make_eat_easy.models.Dish
 import com.google.firebase.firestore.DocumentChange
 
-class DishesRepository {
+object DishesRepository {
 
     var dishes: MutableLiveData<MutableList<Dish>> = MutableLiveData(mutableListOf())
     var categories: MutableLiveData<MutableList<Category>> = MutableLiveData(mutableListOf())
@@ -65,7 +66,7 @@ class DishesRepository {
                 val categoryId = (document.get("categoryId") as Long?)?.toInt()
                 val order = (document.get("order") as Long).toInt()
                 val cookDuration = (document.get("cookDuration") as Long).toInt()
-                val products = (document.get("products") as HashMap<Int, Double>).toMutableMap()
+                val products = (document.get("products") as HashMap<String, Double>).toMutableMap()
 
                 Dish(dishId, dishName, categoryId, cookDuration, products, order)
 
@@ -79,7 +80,7 @@ class DishesRepository {
         dishName: String,
         categoryId: Int?,
         cookDuration: Int,
-        products: MutableMap<Int, Double>,
+        products: MutableMap<String, Double>,
         order: Int
     ) {
 
@@ -99,6 +100,26 @@ class DishesRepository {
             .set(Category(newId, categoryName, newOrder))
 
         return AddedCategory(newId, newOrder)
+    }
+
+    fun incrementOrder(elements: MutableList<CategoryDish>) {
+        DB.runBatch {batch ->
+            elements.forEach {
+                if (it.isDish) {
+                    batch.update(
+                        dishCollection.document(it.dishId.toString()),
+                        "order",
+                        it.order + 1
+                    )
+                } else {
+                    batch.update(
+                        categoryCollection.document(it.categoryId.toString()),
+                        "order",
+                        it.order + 1
+                    )
+                }
+            }
+        }
     }
 
 }
