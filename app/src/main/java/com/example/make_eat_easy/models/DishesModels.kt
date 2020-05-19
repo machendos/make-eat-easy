@@ -47,3 +47,30 @@ class NecessaryProduct(
     val productName: String,
     val count: Double
 )
+
+class DishProduct() {
+
+    var isDish: Boolean = true
+
+    var dishId: Int = 0
+    var dishName: String = ""
+    var cookDuration: Int = 0
+    var products: MutableMap<String, Double> = mutableMapOf<String, Double>()
+
+    var productId: Int = 0
+    var productName: String = ""
+
+    constructor(product: Product): this() {
+        isDish = false
+
+        productId = product.productId
+        productName = product.productName
+    }
+
+    constructor(dish: Dish): this() {
+        dishId = dish.dishId
+        dishName = dish.dishName
+        cookDuration = dish.cookDuration
+        products = dish.products
+
+}
