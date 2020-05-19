@@ -17,30 +17,30 @@ class ProductViewModel : ViewModel() {
     lateinit var cashedcategories: Category
     lateinit var cashedProductsList: List<Product>
 
+    fun onChangeProductCategory() {
+        productsCategoryList.value =
+            productRepository
+                .categories
+                .value!!
+                .map { category ->
+                    CategoryProduct(category)
+                } as MutableList
+
+        val convertedProduct = productRepository
+            .products
+            .value!!
+            .map { product -> CategoryProduct(product) } as MutableList
+
+        productsCategoryList.value!!.addAll(convertedProduct)
+
+        productsCategoryList.value!!.sortBy { it.order }
+        productsCategoryList.value = productsCategoryList.value
+
+    }
+
     init {
 
         productsCategoryList.value = mutableListOf()
-
-        fun onChangeProductCategory() {
-            productsCategoryList.value =
-                productRepository
-                    .categories
-                    .value!!
-                    .map { category ->
-                        CategoryProduct(category)
-                    } as MutableList
-
-            val convertedProduct = productRepository
-                .products
-                .value!!
-                .map { product -> CategoryProduct(product) } as MutableList
-
-            productsCategoryList.value!!.addAll(convertedProduct)
-
-            productsCategoryList.value!!.sortBy { it.order }
-            productsCategoryList.value = productsCategoryList.value
-
-        }
 
         productsCategoryList.addSource(productRepository.categories) {
             onChangeProductCategory()
