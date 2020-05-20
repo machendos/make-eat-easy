@@ -6,46 +6,51 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
-import com.example.make_eat_easy.repository.Authenticator
 import com.example.make_eat_easy.viewmodels.ProductViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-
 
 class ProductsAdapter(
-    val productViewModel: ProductViewModel
+    productViewModel: ProductViewModel
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val productsCategoryList = productViewModel.productsCategoryList
+    private val measures = productViewModel.productRepository.measures
+
     companion object {
-        val CATEGORY = 1
-        val PRODUCT = 2
+        const val CATEGORY = 1
+        const val PRODUCT = 2
     }
 
     private lateinit var productClickListener: (position: Int) -> Unit
 
-    class CategoryHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
-//        init {
-//            categoryView.setFocusable(false);
-//            categoryView.setEnabled(false);
-//        }
-        val categoryName = categoryView.findViewById<TextView>(R.id.category_text)
+    fun setProductClickListener(listener: (position: Int) -> Unit ) {
+        productClickListener = listener
     }
 
-    class ProductHolder(productView: View, productClickListener: (position: Int)  -> Unit) : RecyclerView.ViewHolder(productView) {
-        val productNameView = productView.findViewById<TextView>(R.id.product_name)
-        val measureNameView = productView.findViewById<TextView>(R.id.measure_name)
+    class CategoryHolder(categoryView: View) :
+        RecyclerView.ViewHolder(categoryView) {
+        val categoryName: TextView =
+            categoryView.findViewById(R.id.category_text)
+    }
+
+    class ProductHolder(
+        productView: View, productClickListener: (position: Int)  -> Unit
+    ) : RecyclerView.ViewHolder(productView) {
+        val productNameView: TextView =
+            productView.findViewById(R.id.product_name)
+        val measureNameView: TextView =
+            productView.findViewById(R.id.measure_name)
         init {
             productView.setOnClickListener { productClickListener(adapterPosition) }
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val item = productViewModel.productsCategoryList.value!![position]
+        val item = productsCategoryList.value!![position]
 
         if (getItemViewType(position) == PRODUCT) {
             val measureId = item.measureId
-            val measure = productViewModel.productRepository.measures.value!!.find { it.measureId == measureId }
+            val measure = measures.value!!.find { it.measureId == measureId }
             (holder as ProductHolder).productNameView.text = item.productName
 
 //            TODO:
@@ -56,7 +61,7 @@ class ProductsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int =
-        if (productViewModel.productsCategoryList.value!![position].isProduct) PRODUCT else CATEGORY
+        if (productsCategoryList.value!![position].isProduct) PRODUCT else CATEGORY
 
 
     override fun onCreateViewHolder(
@@ -66,33 +71,14 @@ class ProductsAdapter(
         return if (viewType == PRODUCT) {
             val productView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.product_item, parent, false)
-            ProductsAdapter.ProductHolder(productView, productClickListener)
+            ProductHolder(productView, productClickListener)
         } else {
             val categoryView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.category_item, parent, false)
-            ProductsAdapter.CategoryHolder(categoryView)
+            CategoryHolder(categoryView)
         }
     }
 
-    override fun getItemCount() = productViewModel.productsCategoryList.value!!.size
-
-    fun deleteProduct(position: Int) {
-
-        val productId = productViewModel.productsCategoryList.value!![position].productId
-
-        FirebaseFirestore
-            .getInstance()
-            .collection("userData")
-            .document(Authenticator().getEmail())
-            .collection("product")
-            .document(productId.toString())
-            .delete()
-
-    }
-
-    fun setProductClickListener(listener: (position: Int) -> Unit ) {
-        productClickListener = listener
-    }
-
+    override fun getItemCount() = productsCategoryList.value!!.size
 
 }
