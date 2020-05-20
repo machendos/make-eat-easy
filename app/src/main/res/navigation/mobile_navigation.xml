@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_nav_home_to_dishes"
             app:destination="@id/dishes" />
+        <action
+            android:id="@+id/action_nav_home_to_addAction2"
+            app:destination="@id/addAction" />
     </fragment>
 
     <activity
@@ -36,5 +39,9 @@
         android:id="@+id/addDish"
         android:name="com.example.make_eat_easy.views.AddDish"
         android:label="AddDish" />
+    <fragment
+        android:id="@+id/addAction"
+        android:name="com.example.make_eat_easy.views.AddAction"
+        android:label="AddAction" />
 
 </navigation>
