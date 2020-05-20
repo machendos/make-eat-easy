@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.views
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
@@ -13,17 +12,20 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.make_eat_easy.R
+import com.example.make_eat_easy.adapters.DishesForActionAdapter
 import com.example.make_eat_easy.databinding.FragmentAddActionBinding
-import com.example.make_eat_easy.viewmodels.AddAcionViewModel
+import com.example.make_eat_easy.viewmodels.AddActionViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddAction : Fragment() {
 
     private lateinit var binding: FragmentAddActionBinding
-    private lateinit var viewModel: AddAcionViewModel
+    private lateinit var viewModel: AddActionViewModel
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,7 +36,7 @@ class AddAction : Fragment() {
         val view = binding.root
 
 
-        viewModel = ViewModelProvider(this)[AddAcionViewModel::class.java]
+        viewModel = ViewModelProvider(this)[AddActionViewModel::class.java]
 
         binding.cookingRadio.setOnClickListener {
             viewModel.actionType = viewModel.COOKING_TYPE
@@ -49,6 +51,20 @@ class AddAction : Fragment() {
         }
 
         binding.timeToStartEdit.setOnClickListener { showDialogs() }
+
+        val adapter = DishesForActionAdapter(requireContext(), viewModel)
+
+        val recyclerView = binding.actionDishes
+        recyclerView.setHasFixedSize(true)
+
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
+
+        binding.addActionDishesButton.setOnClickListener {
+            adapter.itemsCount++
+            adapter.notifyDataSetChanged()
+        }
+
 
         return view
     }

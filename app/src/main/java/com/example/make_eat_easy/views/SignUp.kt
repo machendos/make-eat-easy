@@ -19,14 +19,12 @@ class SignUp: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.signup_activity
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.signup_activity)
         viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
-        binding.viewModel = this.viewModel
+
+        binding.viewModel = viewModel
 
         viewModel.success.observe(this) {
-//            TODO: automatically signin
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -36,7 +34,6 @@ class SignUp: AppCompatActivity() {
                 .make(binding.root, it, Snackbar.LENGTH_LONG)
                 .show()
         }
-
 
     }
 }

@@ -9,25 +9,18 @@ import com.example.make_eat_easy.R
 import com.example.make_eat_easy.databinding.StartActivityBinding
 import com.example.make_eat_easy.viewmodels.StartViewModel
 
-
-
 class StartActivity: AppCompatActivity() {
 
     private lateinit var viewModel: StartViewModel
     private lateinit var binding: StartActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.start_activity
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.start_activity)
         viewModel = ViewModelProvider(this)[StartViewModel::class.java]
 
         if (viewModel.alreadyLoggedIn) {
-
-//            TODO: change to the main activity
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

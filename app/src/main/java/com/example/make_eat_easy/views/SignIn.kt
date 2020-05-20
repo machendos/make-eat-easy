@@ -19,10 +19,9 @@ class SignIn: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.signin_activity
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.signin_activity)
         viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
+
         binding.viewModel = viewModel
 
         viewModel.success.observe(this) {
@@ -35,7 +34,6 @@ class SignIn: AppCompatActivity() {
                 .make(binding.root, it, Snackbar.LENGTH_LONG)
                 .show()
         }
-
 
     }
 }
