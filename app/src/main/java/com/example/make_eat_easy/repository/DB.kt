@@ -6,7 +6,7 @@ import com.google.firebase.firestore.WriteBatch
 
 object DB {
 
-    private val email = Authenticator().getEmail()
+    private val email = Authenticator.getEmail()
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -19,17 +19,25 @@ object DB {
     val productCategoryCollection = userDocument.collection("category")
     val dishCollection = userDocument.collection("dish")
     val dishCategoryCollection = userDocument.collection("dishCategory")
+    val actionCollection = userDocument.collection("action")
 
     fun create(email: String) {
         val measureCategory = FirebaseFirestore
             .getInstance()
             .collection("userData")
-            .document(Authenticator().getEmail())
+            .document(Authenticator.getEmail())
             .collection("measure")
 
         measureCategory.add(Measure(1, "kilograms"))
         measureCategory.add(Measure(2, "grams", 1, 1000.0))
         measureCategory.add(Measure(3, "pieces"))
+
+        this.init()
+    }
+
+    fun init() {
+        DishesRepository
+        ProductsRepository
     }
 
     fun runBatch(callback: (batch: WriteBatch) -> Unit) = FirebaseFirestore

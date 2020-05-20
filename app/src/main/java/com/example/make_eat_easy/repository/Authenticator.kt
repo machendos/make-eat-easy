@@ -2,7 +2,7 @@ package com.example.make_eat_easy.repository
 
 import com.google.firebase.auth.FirebaseAuth
 
-class Authenticator {
+object Authenticator {
 
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser

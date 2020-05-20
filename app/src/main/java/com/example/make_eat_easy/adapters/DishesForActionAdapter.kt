@@ -10,28 +10,36 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.make_eat_easy.R
-import com.example.make_eat_easy.viewmodels.AddAcionViewModel
+import com.example.make_eat_easy.viewmodels.AddActionViewModel
 
-class DishesForActionAdapter(val context: Context, val viewModel: AddAcionViewModel) :
+class DishesForActionAdapter(val context: Context, val viewModel: AddActionViewModel) :
     RecyclerView.Adapter<DishesForActionAdapter.DishBlankHolder>() {
 
     val dishes = mutableListOf<DishBlankHolder>()
 
     var itemsCount = 1
 
-    class DishBlankHolder(blankView: View, viewModel: AddAcionViewModel, context: Context) : RecyclerView.ViewHolder(blankView) {
+    class DishBlankHolder(blankView: View, viewModel: AddActionViewModel, context: Context) :
+        RecyclerView.ViewHolder(blankView) {
         val dishName = blankView.findViewById<AutoCompleteTextView>(R.id.dish_name_edit)
         val dishCount = blankView.findViewById<EditText>(R.id.serv_number_edit)
         val position = blankView.findViewById<TextView>(R.id.position)
 
         init {
-            dishName.setAdapter(ArrayAdapter<String>(context, R.layout.element_autocomplete, R.id.autocomplete_element,
-                viewModel.productsDishesList.value!!.map { if (it.isDish) it.dishName else it.productName }))
+            dishName.setAdapter(
+                ArrayAdapter<String>(context,
+                    R.layout.element_autocomplete,
+                    R.id.autocomplete_element,
+                    viewModel.productsDishesList.value!!.map { if (it.isDish) it.dishName else it.productName })
+            )
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishesForActionAdapter.DishBlankHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DishesForActionAdapter.DishBlankHolder {
 
         val view = DishBlankHolder(
             LayoutInflater.from(parent.context)
@@ -45,14 +53,13 @@ class DishesForActionAdapter(val context: Context, val viewModel: AddAcionViewMo
     }
 
 
-
     override fun onBindViewHolder(
         holder: DishBlankHolder,
         position: Int
     ) {
 
         holder.position.text = position.toString()
-        }
+    }
 
 
     override fun getItemCount() = itemsCount
