@@ -12,6 +12,12 @@ class AddAcionViewModel: ViewModel() {
     val dishRepository = DishesRepository
     val productsDishesList = MediatorLiveData<MutableList<DishProduct>>()
 
+    val COOKING_TYPE = 1
+    val EATING_TYPE = 2
+    val OTHER_TYPE = 3
+
+    var actionType = COOKING_TYPE
+
     fun onChangeProductDish() {
         productsDishesList.value = productRepository.products.value!!.map { DishProduct(it) } as MutableList
         val convertedDishes = dishRepository

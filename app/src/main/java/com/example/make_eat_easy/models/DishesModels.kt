@@ -60,17 +60,18 @@ class DishProduct() {
     var productId: Int = 0
     var productName: String = ""
 
-    constructor(product: Product): this() {
+    constructor(product: Product) : this() {
         isDish = false
 
         productId = product.productId
         productName = product.productName
     }
 
-    constructor(dish: Dish): this() {
+    constructor(dish: Dish) : this() {
         dishId = dish.dishId
         dishName = dish.dishName
         cookDuration = dish.cookDuration
         products = dish.products
 
+    }
 }
