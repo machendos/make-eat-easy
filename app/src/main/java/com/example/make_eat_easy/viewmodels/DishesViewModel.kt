@@ -1,6 +1,5 @@
 package com.example.make_eat_easy.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.models.CategoryDish
@@ -11,7 +10,7 @@ import com.example.make_eat_easy.repository.ProductsRepository
 class DishesViewModel : ViewModel() {
 
     val dishesRepository = DishesRepository
-    val productRepository = ProductsRepository
+    private val productRepository = ProductsRepository
 
     lateinit var cashedDish: Dish
 
@@ -31,7 +30,6 @@ class DishesViewModel : ViewModel() {
             dishesCategoryList.value!!.addAll(convertedDishes)
             dishesCategoryList.value!!.sortBy { it.order }
             dishesCategoryList.value = dishesCategoryList.value
-            Log.d("asd-change", dishesCategoryList.value.toString())
         }
 
         dishesCategoryList.addSource(dishesRepository.categories) { onChangeDishCategory() }
@@ -44,9 +42,6 @@ class DishesViewModel : ViewModel() {
         cookDuration: String,
         products: Map<String, String>
     ) {
-
-        Log.d("asd-before-2", dishesCategoryList.value.toString())
-
 
         var duration = 0
         try {
@@ -75,7 +70,6 @@ class DishesViewModel : ViewModel() {
         }.toMap().toMutableMap()
 
         if (categoryName == "") {
-            Log.d("asd-before", dishesCategoryList.value.toString())
             val order = dishesCategoryList.value!![dishesCategoryList.value!!.lastIndex].order + 1
             dishesRepository.addDish(dishName, null, duration, filtredProducts, order)
             return
