@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,23 +33,21 @@ class AddAction : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_action, container, false)
         val view = binding.root
-
 
         viewModel = ViewModelProvider(this)[AddActionViewModel::class.java]
 
         binding.cookingRadio.setOnClickListener {
-            viewModel.actionType = viewModel.COOKING_TYPE
+            viewModel.setType(viewModel.COOKING_TYPE)
         }
 
         binding.eatingRadio.setOnClickListener {
-            viewModel.actionType = viewModel.EATING_TYPE
+            viewModel.setType(viewModel.EATING_TYPE)
         }
 
         binding.otherRadio.setOnClickListener {
-            viewModel.actionType = viewModel.OTHER_TYPE
+            viewModel.setType(viewModel.OTHER_TYPE)
         }
 
         binding.timeToStartEdit.setOnClickListener { showDialogs() }
@@ -65,8 +65,34 @@ class AddAction : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
+        val watcher = object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val startTime = binding.timeToStartEdit.text.toString().trim()
+                val duration = binding.durationEdit.text.toString().trim().toIntOrNull()
+
+                binding.readyAddDishButton.isEnabled = startTime.isNotEmpty() && duration != null
+            }
+        }
+
+        binding.timeToStartEdit.addTextChangedListener(watcher)
+        binding.durationEdit.addTextChangedListener(watcher)
+
+        binding.readyAddDishButton.setOnClickListener {
+            val dishes = adapter.dishes.map {
+                it.dishName.text.toString().trim() to it.dishCount.text.toString().trim()
+            }.toMap()
+
+            val duration = binding.durationEdit.text.toString().trim().toInt()
+
+            viewModel.addAction(duration, dishes)
+
+        }
 
         return view
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -94,12 +120,9 @@ class AddAction : Fragment() {
                         Log.d("asdasd", calendar.toString())
                         binding
                             .timeToStartEdit
-                            .setText(
-                                dateFormat
-                                    .format(
-                                        calendar.time
-                                    )
-                            )
+                            .setText(dateFormat.format(calendar.time))
+
+                        viewModel.setTime(calendar)
 
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
