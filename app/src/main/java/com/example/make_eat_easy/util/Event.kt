@@ -1,4 +1,4 @@
-package com.example.make_eat_easy.weekview
+package com.example.make_eat_easy.util
 
 import com.alamkanak.weekview.WeekViewDisplayable
 import com.alamkanak.weekview.WeekViewEvent

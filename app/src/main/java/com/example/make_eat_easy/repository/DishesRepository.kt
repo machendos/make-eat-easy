@@ -81,14 +81,21 @@ object DishesRepository {
         categoryId: Int?,
         cookDuration: Int,
         products: MutableMap<String, Double>,
-        order: Int
+        order: Int?
     ) {
+
+        var maxOrder = 0
+        if (order == null) {
+            dishes.value!!.forEach { if (it.order >= maxOrder) maxOrder = it.order + 1 }
+            categories.value!!.forEach { if (it.order >= maxOrder) maxOrder = it.order + 1 }
+
+        } else maxOrder = order
 
         var maxId = 0
         dishes.value!!.forEach { if (it.dishId >= maxId) maxId = it.dishId + 1 }
 
         dishCollection.document(maxId.toString())
-            .set(Dish(maxId, dishName, categoryId, cookDuration, products, order))
+            .set(Dish(maxId, dishName, categoryId, cookDuration, products, maxOrder))
 
     }
 

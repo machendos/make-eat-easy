@@ -30,7 +30,7 @@ class DishesForActionAdapter(val context: Context, val viewModel: AddActionViewM
                 ArrayAdapter<String>(context,
                     R.layout.element_autocomplete,
                     R.id.autocomplete_element,
-                    viewModel.productsDishesList.value!!.map { if (it.isDish) it.dishName else it.productName })
+                    viewModel.dishesList.value!!.map { it.dishName })
             )
         }
 
