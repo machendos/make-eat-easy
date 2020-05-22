@@ -26,6 +26,13 @@ class Dishes : Fragment() {
         fun newInstance() = Dishes()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity)
+            .setActionBarTitle("Dishes")
+    }
+
     private val viewModel: DishesViewModel by activityViewModels()
     private  lateinit var binding: DishesFragmentBinding
 

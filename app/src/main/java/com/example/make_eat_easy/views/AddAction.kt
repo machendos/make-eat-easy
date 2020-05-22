@@ -27,6 +27,13 @@ class AddAction : Fragment() {
     private lateinit var binding: FragmentAddActionBinding
     private lateinit var viewModel: AddActionViewModel
 
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity)
+            .setActionBarTitle("Add action")
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

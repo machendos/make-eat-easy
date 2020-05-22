@@ -12,6 +12,7 @@ import com.alamkanak.weekview.WeekViewEvent
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.databinding.FragmentHomeBinding
 import com.example.make_eat_easy.viewmodels.AddActionViewModel
+import com.example.make_eat_easy.views.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
@@ -38,6 +39,13 @@ class HomeNavigationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity)
+            .setActionBarTitle("Make eat easy")
     }
 
     override fun onCreateView(

@@ -25,6 +25,8 @@ class Products : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.products)
         val viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
 
+        supportActionBar!!.title = "Products"
+
         val productsAdapter = ProductsAdapter(viewModel)
 
         viewModel.productRepository.measures.observe(this) {

@@ -22,6 +22,13 @@ class AddDish : Fragment() {
     private val viewModel: DishesViewModel by activityViewModels()
     private lateinit var binding: AddDishBinding
 
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity)
+            .setActionBarTitle("Add dish")
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
