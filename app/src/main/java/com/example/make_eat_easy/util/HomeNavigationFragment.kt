@@ -1,9 +1,7 @@
 package com.example.make_eat_easy.util
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,6 +15,29 @@ import java.util.*
 
 class HomeNavigationFragment : Fragment() {
 
+    lateinit var binding: FragmentHomeBinding
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater(context).inflate(R.menu.main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.day_1_settings -> binding.weekView.numberOfVisibleDays = 1
+            R.id.days_3_settings -> binding.weekView.numberOfVisibleDays = 3
+            R.id.days_7_settings -> binding.weekView.numberOfVisibleDays = 7
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -25,7 +46,7 @@ class HomeNavigationFragment : Fragment() {
 
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val binding = DataBindingUtil.inflate<FragmentHomeBinding>(inflater, R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         val viewModel = ViewModelProvider(this)[AddActionViewModel::class.java]
 
         viewModel.actions.observe(viewLifecycleOwner) { actions ->
