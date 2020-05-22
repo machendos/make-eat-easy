@@ -1,26 +1,5 @@
 package com.example.make_eat_easy.models
 
-class Product(
-    var productId: Int = 0,
-    var productName: String = "",
-    var measureId: Int = 0,
-    var categoryId: Int? = 0,
-    var order: Int = 0
-)
-
-class Measure(
-    var measureId: Int = 0,
-    var measureName: String = "",
-    var parentMeasureId: Int? = 0,
-    var parentMeasureFactor: Double = 0.0
-)
-
-class Category(
-    var categoryId: Int = 0,
-    var categoryName: String = "",
-    var order: Int = 0
-)
-
 class CategoryProduct() {
 
     var isProduct: Boolean = true
