@@ -3,24 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.make_eat_easy.util.HomeNavigationFragment"
-        android:label="sdf"
-        tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/action_nav_home_to_products"
-            app:destination="@id/products" />
-        <action
-            android:id="@+id/action_nav_home_to_dishes"
-            app:destination="@id/dishes" />
-        <action
-            android:id="@+id/action_nav_home_to_addAction2"
-            app:destination="@id/addAction" />
-    </fragment>
+    app:startDestination="@id/homeNavigationFragment">
 
     <activity
         android:id="@+id/products"
@@ -35,6 +18,7 @@
             android:id="@+id/action_dishes_to_addDish"
             app:destination="@id/addDish" />
     </fragment>
+
     <fragment
         android:id="@+id/addDish"
         android:name="com.example.make_eat_easy.views.AddDish"
@@ -43,5 +27,20 @@
         android:id="@+id/addAction"
         android:name="com.example.make_eat_easy.views.AddAction"
         android:label="AddAction" />
+    <fragment
+        android:id="@+id/homeNavigationFragment"
+        tools:layout="@layout/fragment_home"
+        android:name="com.example.make_eat_easy.util.HomeNavigationFragment"
+        android:label="HomeNavigationFragment" >
+        <action
+            android:id="@+id/action_homeNavigationFragment_to_dishes"
+            app:destination="@id/dishes" />
+        <action
+            android:id="@+id/action_homeNavigationFragment_to_products"
+            app:destination="@id/products" />
+        <action
+            android:id="@+id/action_homeNavigationFragment_to_addAction"
+            app:destination="@id/addAction" />
+    </fragment>
 
 </navigation>

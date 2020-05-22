@@ -19,6 +19,7 @@
             <RadioButton android:id="@+id/cooking_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="Cooking"
                 />
             <RadioButton android:id="@+id/eating_radio"
@@ -78,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add"
+            android:enabled="false"
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
