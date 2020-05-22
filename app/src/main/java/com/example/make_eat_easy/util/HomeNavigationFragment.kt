@@ -7,10 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.alamkanak.weekview.WeekViewEvent
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.databinding.FragmentHomeBinding
 import com.example.make_eat_easy.viewmodels.AddActionViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class HomeNavigationFragment : Fragment() {
@@ -48,6 +50,13 @@ class HomeNavigationFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         val viewModel = ViewModelProvider(this)[AddActionViewModel::class.java]
+
+        val fab: FloatingActionButton = binding.fab
+
+        fab.setOnClickListener { _ ->
+            findNavController().navigate(R.id.addAction)
+
+        }
 
         viewModel.actions.observe(viewLifecycleOwner) { actions ->
 
@@ -93,4 +102,5 @@ class HomeNavigationFragment : Fragment() {
 
         return binding.root
     }
+
 }
