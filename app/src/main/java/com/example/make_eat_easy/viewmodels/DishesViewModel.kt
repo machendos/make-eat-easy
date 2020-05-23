@@ -54,7 +54,7 @@ class DishesViewModel : ViewModel() {
             var parsedCount = 0.0
             try {
                 parsedCount = count.toDouble()
-            } catch (e: Error) {
+            } catch (e: Throwable) {
             }
 
             val product = productRepository.products.value!!.find { it.productName == productName }
