@@ -1,16 +1,18 @@
 package com.example.make_eat_easy.viewmodels
 
-import androidx.lifecycle.MediatorLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.make_eat_easy.models.DishProduct
+import com.example.make_eat_easy.repository.ActionsRepository
 import com.example.make_eat_easy.repository.DishesRepository
-import com.example.make_eat_easy.repository.ProductsRepository
+import java.util.*
 
 class AddActionViewModel : ViewModel() {
 
-    private val productRepository = ProductsRepository
+//    private val productRepository = ProductsRepository
     private val dishRepository = DishesRepository
-    val productsDishesList = MediatorLiveData<MutableList<DishProduct>>()
+    private val actionRepository = ActionsRepository
+    val dishesList = dishRepository.dishes
+    val actions = actionRepository.actions
 
 
     val COOKING_TYPE = 1
@@ -19,40 +21,71 @@ class AddActionViewModel : ViewModel() {
 
     var actionType = COOKING_TYPE
 
-    private fun onChangeProductDish() {
+    fun setType(type: Int) { actionType = type }
 
-        productsDishesList.value =
-            productRepository.products.value!!
-                .map { DishProduct(it) } as MutableList
+    lateinit var dateTime: Calendar
 
-        val convertedDishes = dishRepository
-            .dishes
-            .value!!
-            .map { DishProduct(it) } as MutableList
+    fun setTime(calendar: Calendar) { dateTime = calendar }
 
-        productsDishesList.value!!.addAll(convertedDishes)
-        productsDishesList.value = productsDishesList.value
+    fun addAction(duration: Int, dishes: Map<String, String>) {
 
-    }
+        val parsedDishes = dishes.filter { it.key !== "" }.map {(dishName, count) ->
 
-    init {
+            val parsedCount = count.toDoubleOrNull() ?: 0.0
 
-        productsDishesList.value =
-            productRepository
-                .products
-                .value!!
-                .map { DishProduct(it) } as MutableList
+            val dish = dishRepository.dishes.value!!.find { it.dishName == dishName }
 
-        dishRepository
-            .dishes
-            .value!!
-            .forEach { productsDishesList.value!!.add(DishProduct(it)) }
-        productsDishesList.value = productsDishesList.value
+            if (dish == null) {
+                val dishId = dishRepository
+                    .addDish(dishName, null, 0, mutableMapOf(), null)
+                    .toString()
+                dishId to parsedCount
+            } else {
+                dish.dishId.toString() to parsedCount.toDouble()
+            }
 
-        productsDishesList
-            .addSource(productRepository.products) { onChangeProductDish() }
-        productsDishesList
-            .addSource(dishRepository.dishes) { onChangeProductDish() }
+        }.toMap().toMutableMap()
+
+        Log.d("asdasd", "Now call in repository")
+        actionRepository.addAction(actionType, dateTime, duration, parsedDishes)
+
 
     }
+
+//    private fun onChangeProductDish() {
+//
+//        productsDishesList.value =
+//            productRepository.products.value!!
+//                .map { DishProduct(it) } as MutableList
+//
+//        val convertedDishes = dishRepository
+//            .dishes
+//            .value!!
+//            .map { DishProduct(it) } as MutableList
+//
+//        productsDishesList.value!!.addAll(convertedDishes)
+//        productsDishesList.value = productsDishesList.value
+//
+//    }
+
+//    init {
+//
+//        productsDishesList.value =
+//            productRepository
+//                .products
+//                .value!!
+//                .map { DishProduct(it) } as MutableList
+//
+//        dishRepository
+//            .dishes
+//            .value!!
+//            .forEach { productsDishesList.value!!.add(DishProduct(it)) }
+//        productsDishesList.value = productsDishesList.value
+//
+//        productsDishesList
+//            .addSource(productRepository.products) { onChangeProductDish() }
+//        productsDishesList
+//            .addSource(dishRepository.dishes) { onChangeProductDish() }
+//
+//    }
 }
