@@ -1,5 +1,6 @@
 package com.example.make_eat_easy.repository
 
+import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.Measure
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.WriteBatch
@@ -31,6 +32,12 @@ object DB {
         measureCategory.add(Measure(1, "kilograms"))
         measureCategory.add(Measure(2, "grams", 1, 1000.0))
         measureCategory.add(Measure(3, "pieces"))
+
+        productCategoryCollection.document("100000")
+            .set(Category(100000, "Without category", 100000))
+
+        dishCategoryCollection.document("100000")
+            .set(Category(100000, "Without category", 100000))
 
         this.init()
     }

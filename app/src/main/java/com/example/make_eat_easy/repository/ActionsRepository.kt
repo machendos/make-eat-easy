@@ -46,7 +46,8 @@ object ActionsRepository {
 
     fun addAction(type: Int, start: Calendar, duration: Int, dishes: Map<String, Double>) {
 
-        val id = 0
+        actions.value!!.sortByDescending { it.actionId }
+        val id = if (actions.value!!.size == 0) 0 else actions.value!![0].actionId + 1
 
         actionsCollection.document(id.toString()).set(Action(
             start.get(Calendar.YEAR),

@@ -230,4 +230,21 @@ object ProductsRepository {
             }
         }
     }
+
+
+    //    TODO:
+    fun addMuchProducts(productsNew: MutableList<String>) {
+        val id1 = products.value!!.sortByDescending { it.productId }
+        var id2 = if (products.value!!.size == 0) 0 else products.value!![0].productId + 1
+
+        val order1 = products.value!!.sortByDescending { it.order }
+        var order = if (products.value!!.size == 0) 0 else products.value!![0].order + 1
+
+        productsNew.forEach {
+            productCollection.document(id2.toString()).set(Product(id2, it, 1, 100000, order))
+            id2++
+            order++
+        }
+
+    }
 }
