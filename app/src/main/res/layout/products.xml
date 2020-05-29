@@ -25,6 +25,7 @@
             android:text="Add category" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="#e8e882"
             android:id="@+id/products_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
