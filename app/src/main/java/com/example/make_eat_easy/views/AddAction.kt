@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.make_eat_easy.R
 import com.example.make_eat_easy.adapters.DishesForActionAdapter
@@ -95,6 +96,8 @@ class AddAction : Fragment() {
             val duration = binding.durationEdit.text.toString().trim().toInt()
 
             viewModel.addAction(duration, dishes)
+
+            findNavController().navigate(R.id.homeNavigationFragment)
 
         }
 
