@@ -1,11 +1,13 @@
 package com.example.make_eat_easy.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.models.CategoryDish
 import com.example.make_eat_easy.models.Dish
 import com.example.make_eat_easy.repository.DishesRepository
 import com.example.make_eat_easy.repository.ProductsRepository
+import kotlin.random.Random
 
 class DishesViewModel : ViewModel() {
 
@@ -40,34 +42,47 @@ class DishesViewModel : ViewModel() {
         dishName: String,
         categoryName: String,
         cookDuration: String,
-        products: Map<String, String>
+        productors: Map<String, String>
     ) {
 
         var duration = 0
         try {
             duration = cookDuration.toInt()
-        } catch (err: Error) {
-        }
+        } catch (err: Throwable) { }
 
-        val filtredProducts = products.map { (productName, count) ->
+        val products = productors.filter { it.key != "" }
 
-            var parsedCount = 0.0
-            try {
-                parsedCount = count.toDouble()
-            } catch (e: Throwable) {
-            }
+        var filtredProducts: MutableMap<String, Double>
+        var newProducts = mutableListOf<String>()
 
-            val product = productRepository.products.value!!.find { it.productName == productName }
+            filtredProducts = products.map { (productName, count) ->
 
-            if (product == null) {
-                val productId = productRepository
-                    .addProduct(productName, null, 1, null).toString()
-                productId to parsedCount
-            } else {
-                product.productId.toString() to count.toDouble()
-            }
 
-        }.toMap().toMutableMap()
+                Log.d("asdDILTER", "$productName $count")
+
+                var parsedCount = 0.0
+                try {
+                    parsedCount = count.toDouble()
+                } catch (e: Throwable) { }
+
+                val product =
+                    productRepository.products.value!!.find { it.productName == productName }
+
+                if (product == null) {
+
+                    newProducts.add(productName)
+
+//                    val productId = productRepository
+//                        .addProduct(Random.nextInt(), null, 1, null).toString()
+//                            TODO: !!
+                    Random.nextInt().toString() to parsedCount
+                } else {
+                    product.productId.toString() to count.toDouble()
+                }
+
+            }.toMap().toMutableMap()
+
+        productRepository.addMuchProducts(newProducts)
 
         if (categoryName == "") {
             val order = dishesCategoryList.value!![dishesCategoryList.value!!.lastIndex].order + 1
