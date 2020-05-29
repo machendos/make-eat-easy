@@ -22,11 +22,19 @@
     <fragment
         android:id="@+id/addDish"
         android:name="com.example.make_eat_easy.views.AddDish"
-        android:label="AddDish" />
+        android:label="AddDish" >
+        <action
+            android:id="@+id/action_addDish_to_dishes"
+            app:destination="@id/dishes" />
+    </fragment>
     <fragment
         android:id="@+id/addAction"
         android:name="com.example.make_eat_easy.views.AddAction"
-        android:label="AddAction" />
+        android:label="AddAction" >
+        <action
+            android:id="@+id/action_addAction_to_homeNavigationFragment"
+            app:destination="@id/homeNavigationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeNavigationFragment"
         tools:layout="@layout/fragment_home"
