@@ -1,15 +1,21 @@
 package com.example.make_eat_easy.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.CategoryProduct
 import com.example.make_eat_easy.models.Product
+import com.example.make_eat_easy.repository.ProductRepositoryInterface
 import com.example.make_eat_easy.repository.ProductsRepository
 
-class ProductViewModel : ViewModel() {
+class ProductViewModel(productRepositoryEntered: ProductRepositoryInterface) : ViewModel() {
 
-    val productRepository = ProductsRepository
+    constructor(): this(ProductsRepository) {
+        Log.d("asdasd", "EMPTY CONSTRUCTOR")
+    }
+
+    var productRepository = productRepositoryEntered
 
     val productsCategoryList = MediatorLiveData<MutableList<CategoryProduct>>()
 
@@ -18,6 +24,9 @@ class ProductViewModel : ViewModel() {
     lateinit var cashedProductsList: List<Product>
 
     fun onChangeProductCategory() {
+
+        productRepository = ProductsRepository
+
         productsCategoryList.value =
             productRepository
                 .categories
@@ -48,6 +57,21 @@ class ProductViewModel : ViewModel() {
 
         productsCategoryList.addSource(productRepository.products) {
             onChangeProductCategory()
+        }
+    }
+
+    fun deleteProductLocal(productId: Int) {
+        val productIndex = productsCategoryList.value!!.indexOfFirst { it.productId == productId }
+        if (productIndex > -1) productsCategoryList.value!!.removeAt(productIndex)
+    }
+
+    fun deleteCategoryLocal(categoryId: Int) {
+        val categoryIndex = productsCategoryList.value!!
+            .indexOfFirst { it.categoryId == categoryId && !it.isProduct }
+        if (categoryIndex > -1) {
+            productsCategoryList.value!!
+                .forEach { if (it.categoryId == categoryId) it.categoryId = null }
+            productsCategoryList.value!!.removeAt(categoryIndex)
         }
     }
 
@@ -106,6 +130,22 @@ class ProductViewModel : ViewModel() {
             productRepository.updateProduct(productId, newProductName)
 
         }
+
+    }
+
+    fun addProductLocal(id: Int = 0, name: String = "product", categoryId: Int? = null) {
+        val product = Product(id, name, 0, categoryId)
+        productsCategoryList.value!!.add(CategoryProduct(product))
+    }
+
+    fun addCategoryLocal(id: Int = 0, name: String = "category") {
+        val product = Category(id, name)
+        productsCategoryList.value!!.add(CategoryProduct(product))
+    }
+
+    fun editProductLocal(id: Int, newName: String = "product") {
+        val product = productsCategoryList.value!!.find{ it.productId == id }
+        if (product !== null) product.productName = newName
 
     }
 

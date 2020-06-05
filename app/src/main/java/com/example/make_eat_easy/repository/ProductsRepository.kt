@@ -1,5 +1,6 @@
 package com.example.make_eat_easy.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.make_eat_easy.models.Category
 import com.example.make_eat_easy.models.CategoryProduct
@@ -9,17 +10,35 @@ import com.google.firebase.firestore.DocumentChange
 
 data class AddedCategory(val categoryId: Int, val categoryOrder: Int)
 
-object ProductsRepository {
+interface ProductRepositoryInterface {
+    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int?): Int
+    var products: MutableLiveData<MutableList<Product>>
+    var measures: MutableLiveData<MutableList<Measure>>
+    var categories: MutableLiveData<MutableList<Category>>
+    fun addMuchProducts(productsNew: MutableList<String>)
+    fun incrementOrder(elements: MutableList<CategoryProduct>)
+    fun addCategory(categoryName: String): AddedCategory
+    fun addMeasure(measureName: String): Int
+    fun updateProductOrders(productsCategories: MutableList<CategoryProduct>)
+    fun unremoveProduct(product: Product)
+    fun deleteProduct(productId: Int)
+    fun updateProduct(productId: Int, productName: String)
 
-    var products: MutableLiveData<MutableList<Product>> = MutableLiveData(mutableListOf())
-    var measures: MutableLiveData<MutableList<Measure>> = MutableLiveData(mutableListOf())
-    var categories: MutableLiveData<MutableList<Category>> = MutableLiveData(mutableListOf())
+}
+
+object ProductsRepository: ProductRepositoryInterface {
+
+    override var products: MutableLiveData<MutableList<Product>> = MutableLiveData(mutableListOf())
+    override var measures: MutableLiveData<MutableList<Measure>> = MutableLiveData(mutableListOf())
+    override var categories: MutableLiveData<MutableList<Category>> = MutableLiveData(mutableListOf())
 
     private val productCollection = DB.productCollection
     private val measureCollection = DB.measureCollection
     private val categoryCollection = DB.productCategoryCollection
 
     init {
+
+        Log.d("asdasd", "PRODUCT REPOSITORY INIT")
 
         categoryCollection.addSnapshotListener { snapshot, _ ->
 
@@ -136,7 +155,7 @@ object ProductsRepository {
         }
     }
 
-    fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int?): Int {
+    override fun addProduct(productName: String, categoryId: Int?, measureId: Int, order: Int?): Int {
 
         var maxOrder = 0
         if (order == null) {
@@ -154,21 +173,21 @@ object ProductsRepository {
         return maxId
     }
 
-    fun updateProduct(productId: Int, productName: String) {
+    override fun updateProduct(productId: Int, productName: String) {
         productCollection.document(productId.toString()).update("productName", productName)
     }
 
-    fun deleteProduct(productId: Int) {
+    override fun deleteProduct(productId: Int) {
         productCollection
             .document(productId.toString())
             .delete()
     }
 
-    fun unremoveProduct(product: Product) {
+    override fun unremoveProduct(product: Product) {
         productCollection.document(product.productId.toString()).set(product)
     }
 
-    fun updateProductOrders(productsCategories: MutableList<CategoryProduct>) {
+    override fun updateProductOrders(productsCategories: MutableList<CategoryProduct>) {
 
         DB.runBatch { batch ->
             productsCategories.forEach {
@@ -196,14 +215,14 @@ object ProductsRepository {
         }
     }
 
-    fun addMeasure(measureName: String): Int {
+   override fun addMeasure(measureName: String): Int {
         val newId = measures.value!!.map { it.measureId }.sortedDescending()[0] + 1
         measureCollection.document(newId.toString()).set(Measure(newId, measureName))
         return newId
     }
 
 
-    fun addCategory(categoryName: String): AddedCategory {
+    override fun addCategory(categoryName: String): AddedCategory {
         val newId = categories.value!!.map { it.categoryId }.sortedDescending()[0] + 1
         val newOrder = categories.value!!.map { it.order }.sorted()[0] - 100
 
@@ -211,7 +230,7 @@ object ProductsRepository {
         return AddedCategory(newId, newOrder)
     }
 
-    fun incrementOrder(elements: MutableList<CategoryProduct>) {
+    override fun incrementOrder(elements: MutableList<CategoryProduct>) {
         DB.runBatch { batch ->
             elements.forEach {
                 if (it.isProduct) {
@@ -233,7 +252,7 @@ object ProductsRepository {
 
 
     //    TODO:
-    fun addMuchProducts(productsNew: MutableList<String>) {
+    override fun addMuchProducts(productsNew: MutableList<String>) {
         val id1 = products.value!!.sortByDescending { it.productId }
         var id2 = if (products.value!!.size == 0) 0 else products.value!![0].productId + 1
 
