@@ -31,8 +31,9 @@ class AddAction : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        (activity as MainActivity)
-            .setActionBarTitle("Add action")
+//        TODO:
+//        (activity as MainActivity)
+//            .setActionBarTitle("Add action")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -69,7 +70,41 @@ class AddAction : Fragment() {
         recyclerView.adapter = adapter
 
         binding.addActionDishesButton.setOnClickListener {
-            adapter.itemsCount++
+            adapter.itemsCount++//
+//    @Test
+//    fun necessaryDishesRecyclerCount() {
+//        val scenario = launchFragmentInContainer<AddAction>()
+//
+//        class RecyclerViewItemCountAssertion(private val expectedCount: Int) : ViewAssertion {
+//            override fun check(view: View, noViewFoundException: NoMatchingViewException?) {
+//                if (noViewFoundException != null) {
+//                    throw noViewFoundException
+//                }
+//                val recyclerView = view as RecyclerView
+//                val adapter = recyclerView.adapter
+//                assertThat(adapter!!.itemCount, `is`(expectedCount))
+//            }
+//
+//        }
+//
+//        onView(withId(R.id.action_dishes)).check(
+//            RecyclerViewItemCountAssertion(1)
+//        )
+//
+//        onView(withId(R.id.add_action_dishes_button)).perform(click())
+//        onView(withId(R.id.add_action_dishes_button)).perform(click())
+//
+//        onView(withId(R.id.action_dishes)).check(
+//            RecyclerViewItemCountAssertion(3)
+//        )
+//
+//        onView(withId(R.id.add_action_dishes_button)).perform(click())
+//
+//        onView(withId(R.id.action_dishes)).check(
+//            RecyclerViewItemCountAssertion(4)
+//        )
+//
+//    }
             adapter.notifyDataSetChanged()
         }
 
